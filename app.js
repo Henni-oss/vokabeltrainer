@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let aktuelleRunde = [];
     let index = 0;
     let richtigesWort = null;
-    let streakZaehler = 0; // Der neue Erfolgs-Streak-Zähler
+    let streakZaehler = 0;
 
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
@@ -70,20 +70,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const gesamteFragenAnzeige = document.getElementById('gesamte-fragen');
     const progressBar = document.getElementById('progress-bar');
     
-    // Elemente für Dropdown-Interaktion & Streak
     const kategorieSelect = document.getElementById('kategorie-select');
     const selectWrapper = document.getElementById('select-wrapper');
     const streakBadge = document.getElementById('streak-badge');
     const streakText = document.getElementById('streak-text');
 
-    // Pfeil-Umdrehung steuern, wenn das Dropdown fokussiert/geöffnet wird
+    // Steuerung des interaktiven Dropdown-Pfeils (Auf- und Zuklappen)
     if (kategorieSelect) {
-        kategorieSelect.addEventListener('click', () => {
+        kategorieSelect.addEventListener('click', (e) => {
+            e.stopPropagation();
             selectWrapper.classList.toggle('open');
         });
-        kategorieSelect.addEventListener('blur', () => {
+        
+        // Schließt den Pfeil, wenn man außerhalb klickt
+        document.addEventListener('click', () => {
             selectWrapper.classList.remove('open');
         });
+
         kategorieSelect.addEventListener('change', () => {
             selectWrapper.classList.remove('open');
             spielInitialisieren();
@@ -118,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function frageLaden() {
         if (index >= aktuelleRunde.length) {
             wortAnzeige.textContent = "🎉 Sige na!";
-            feedbackAnzeige.innerHTML = `<span>✨ <strong>Ausgezeichnet!</strong> Du hast die Runde beendet. Dein finaler Streak: <strong>${streakZaehler}🔥</strong></span>`;
-            feedbackAnzeige.className = "feedback-box richtig-style";
+            feedbackAnzeige.innerHTML = `<span>✨ <strong>Ausgezeichnet!</strong> Runde beendet. Finaler Streak: <strong>${streakZaehler}🔥</strong></span>`;
+            feedbackAnzeige.className = "feedback-box richtig-text";
             antwortButtons.forEach(btn => btn.style.display = 'none');
             weiterBtn.style.display = 'none';
             return;
@@ -145,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         antwortButtons.forEach((btn, i) => {
             btn.style.display = 'block';
             btn.textContent = optionen[i];
-            btn.className = "antwort-btn";
+            btn.className = "antwort-btn"; // Reset Klassen
             btn.disabled = false;
         });
     }
@@ -156,28 +159,31 @@ document.addEventListener("DOMContentLoaded", () => {
         antwortButtons.forEach(btn => btn.disabled = true);
 
         if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
-            geklickterButton.classList.add('richtig-style');
+            // Kontur des Buttons grün färben
+            geklickterButton.classList.add('richtig-kontur');
             
-            // Streak erhöhen & anzeigen
+            // Streak sofort ab der 1. richtigen Vokabel einblenden und updaten!
             streakZaehler++;
             streakText.textContent = `${streakZaehler}x richtig! 🔥`;
             streakBadge.classList.remove('hidden');
 
             feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
-            feedbackAnzeige.className = "feedback-box richtig-style";
+            feedbackAnzeige.className = "feedback-box richtig-text";
         } else {
-            geklickterButton.classList.add('falsch-style');
+            // Kontur des geklickten Buttons rot färben
+            geklickterButton.classList.add('falsch-kontur');
             
-            // Streak bricht ab und wird ausgeblendet
+            // Streak bricht ab
             streakZaehler = 0;
             streakBadge.classList.add('hidden');
 
             feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
-            feedbackAnzeige.className = "feedback-box falsch-style";
+            feedbackAnzeige.className = "feedback-box falsch-text";
             
+            // Richtigen Button grün umranden, damit man sieht, was gestimmt hätte
             antwortButtons.forEach(btn => {
                 if (btn.textContent === richtigesWort.wort_deutsch) {
-                    btn.classList.add('richtig-style');
+                    btn.classList.add('richtig-kontur');
                 }
             });
         }
