@@ -36,7 +36,7 @@
 
         <div class="section">
             <label for="kategorie-select">Kategorie wählen</label>
-            <div class="select-wrapper">
+            <div class="select-wrapper" id="select-wrapper">
                 <select id="kategorie-select">
                     <option value="alle">Alle Wörter</option>
                     <option value="Farben">Farben</option>
@@ -48,10 +48,15 @@
             </div>
         </div>
 
-        <div class="fortschritt">
-            <span>Vokabel: <strong id="aktuelle-frage">1</strong> von <strong id="gesamte-fragen">10</strong></span>
-            <div class="progress-bar-container">
-                <div id="progress-bar" class="progress-bar-fill"></div>
+        <div class="fortschritt-row">
+            <div class="fortschritt">
+                <span>Vokabel: <strong id="aktuelle-frage">1</strong> von <strong id="gesamte-fragen">10</strong></span>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar-fill"></div>
+                </div>
+            </div>
+            <div id="streak-badge" class="streak-badge hidden">
+                <span id="streak-text">0x richtig! 🔥</span>
             </div>
         </div>
 
@@ -72,7 +77,7 @@
 
         <div id="feedback" class="feedback-box"></div>
 
-        <button id="weiter-btn" class="primary-btn icon-btn">
+        <button id="weiter-btn" class="primary-btn">
             <span>Nächste Frage</span>
             <svg class="white-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
