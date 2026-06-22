@@ -141,7 +141,7 @@ h1 {
     font-weight: 700;
 }
 
-/* Überarbeitetes Dropdown Menü (Exakt wie im Screenshot) */
+/* Dropdown Menü (NEU: Linksbündig & sauberer 3px Rahmen passend zum Container) */
 .section {
     margin-bottom: 20px;
     text-align: left;
@@ -165,11 +165,11 @@ label {
 select {
     width: 100%;
     padding: 14px 20px;
-    border: 3px solid #53768A; /* Dickerer Rahmen wie Container */
+    border: 3px solid #53768A; 
     border-radius: 14px;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    font-weight: 700; /* Fette Schrift */
+    font-weight: 700; 
     color: #3B5168;
     background-color: #ffffff;
     outline: none;
@@ -177,8 +177,8 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
-    text-align: center;
-    text-align-last: center; /* Zentriert die Optionen im Dropdown */
+    text-align: left; /* NEU: Text im Button ist linksbündig */
+    text-align-last: left; 
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
     background-repeat: no-repeat;
     background-position: right 16px center;
@@ -186,26 +186,21 @@ select {
     transition: all 0.2s ease;
 }
 
-/* Wenn das Menü geöffnet ist (Pfeil zeigt nach oben) */
 .select-wrapper.open select {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
 }
 
-/* Fortschritt & Streak */
-.fortschritt-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    margin-bottom: 20px;
+/* Fortschritts-Bereich untereinander strukturiert */
+.fortschritt-block {
+    margin-bottom: 25px;
+    text-align: left;
 }
 
-.fortschritt {
-    flex-grow: 1;
+.fortschritt-info {
     font-size: 13px;
     font-weight: 700;
     color: #53768A;
-    text-align: left;
+    margin-bottom: 6px;
 }
 
 .progress-bar-container {
@@ -213,8 +208,8 @@ select {
     height: 10px;
     background-color: #F0DEC6;
     border-radius: 5px;
-    margin-top: 6px;
     overflow: hidden;
+    margin-bottom: 12px;
 }
 
 .progress-bar-fill {
@@ -224,19 +219,28 @@ select {
     transition: width 0.3s ease;
 }
 
+/* NEU: Flex-Container um das Streak-Badge perfekt horizontal zu zentrieren */
+.streak-center-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 32px; /* Verhindert Layout-Springen */
+}
+
 .streak-badge {
     background-color: #FFF0E6;
     border: 2px solid #FF8833;
-    padding: 6px 12px;
+    padding: 5px 14px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 700;
     color: #E65C00;
     white-space: nowrap;
+    display: inline-block;
     animation: pulseStreak 1.5s infinite alternate;
 }
 
-/* Antwort-Buttons */
+/* Antwort-Buttons (NEU: Feine 2px Kontur) */
 .antwort-box {
     display: grid;
     grid-template-columns: 1fr;
@@ -247,7 +251,7 @@ select {
 .antwort-btn {
     background-color: #ffffff;
     color: #3B5168;
-    border: 3px solid #53768A; /* Gleiche Dicke wie Dropdown */
+    border: 2px solid #53768A; /* Zurück auf feinere 2px Kontur */
     padding: 14px;
     font-size: 16px;
     font-weight: 700;
@@ -263,20 +267,20 @@ select {
     color: #B55219;
 }
 
-/* Button-Konturen bei richtig/falsch */
-.antwort-btn.richtig-kontur {
-    border-color: #2E7D32 !important; /* Kräftiger grüner Rahmen */
+/* NEU: Vollflächiges Feedback für gedrückte / richtige Buttons */
+.antwort-btn.richtig-vollflaechig {
+    background-color: #E8F5E9 !important; /* Hellgrüner Hintergrund */
+    border-color: #2E7D32 !important;     /* Grüner Rahmen */
     color: #2E7D32 !important;
-    background-color: #ffffff !important;
 }
 
-.antwort-btn.falsch-kontur {
-    border-color: #C62828 !important; /* Kräftiger roter Rahmen */
+.antwort-btn.falsch-vollflaechig {
+    background-color: #FFEBEE !important;  /* Hellroter Hintergrund */
+    border-color: #C62828 !important;      /* Roter Rahmen */
     color: #C62828 !important;
-    background-color: #ffffff !important;
 }
 
-/* Feedback-Box (Rein Textbasiert - Ohne Rahmen & ohne Hintergrund) */
+/* Feedback-Textsatz (Clean textbasiert, ohne Hintergrund, ohne Rahmen) */
 .feedback-box {
     min-height: 35px;
     margin-bottom: 15px;
@@ -288,8 +292,8 @@ select {
     gap: 10px;
     padding: 5px 0;
     box-sizing: border-box;
-    background: transparent !important; /* Kein Hintergrund */
-    border: none !important; /* Kein Rahmen */
+    background: transparent !important;
+    border: none !important;
 }
 
 .feedback-box.richtig-text {
@@ -300,7 +304,7 @@ select {
     color: #C62828 !important;
 }
 
-/* Hauptbuttons & Pfeil */
+/* Haupt-Aktionsbuttons */
 .primary-btn {
     width: 100%;
     background-color: #B55219;
