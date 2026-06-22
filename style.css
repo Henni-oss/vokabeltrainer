@@ -141,7 +141,7 @@ h1 {
     font-weight: 700;
 }
 
-/* Dropdown Menü (NEU: Linksbündig & sauberer 3px Rahmen passend zum Container) */
+/* Dropdown Menü (Strichstärke angepasst auf 2px wie bei den Buttons) */
 .section {
     margin-bottom: 20px;
     text-align: left;
@@ -165,7 +165,7 @@ label {
 select {
     width: 100%;
     padding: 14px 20px;
-    border: 3px solid #53768A; 
+    border: 2px solid #53768A; /* Strichstärke exakt 2px wie bei den Buttons */
     border-radius: 14px;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
@@ -177,9 +177,9 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
-    text-align: left; /* NEU: Text im Button ist linksbündig */
+    text-align: left; 
     text-align-last: left; 
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
     background-repeat: no-repeat;
     background-position: right 16px center;
     background-size: 18px;
@@ -187,10 +187,10 @@ select {
 }
 
 .select-wrapper.open select {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
 }
 
-/* Fortschritts-Bereich untereinander strukturiert */
+/* Fortschritts-Bereich (Unverändert fest linksbündig) */
 .fortschritt-block {
     margin-bottom: 25px;
     text-align: left;
@@ -201,6 +201,7 @@ select {
     font-weight: 700;
     color: #53768A;
     margin-bottom: 6px;
+    text-align: left; /* Fest linksbündig */
 }
 
 .progress-bar-container {
@@ -219,12 +220,12 @@ select {
     transition: width 0.3s ease;
 }
 
-/* NEU: Flex-Container um das Streak-Badge perfekt horizontal zu zentrieren */
+/* Horizontal zentrierter Streak unter dem Balken */
 .streak-center-container {
     display: flex;
     justify-content: center;
     width: 100%;
-    min-height: 32px; /* Verhindert Layout-Springen */
+    min-height: 32px; 
 }
 
 .streak-badge {
@@ -240,7 +241,7 @@ select {
     animation: pulseStreak 1.5s infinite alternate;
 }
 
-/* Antwort-Buttons (NEU: Feine 2px Kontur) */
+/* Antwort-Buttons (Feine 2px Kontur) */
 .antwort-box {
     display: grid;
     grid-template-columns: 1fr;
@@ -251,23 +252,23 @@ select {
 .antwort-btn {
     background-color: #ffffff;
     color: #3B5168;
-    border: 2px solid #53768A; /* Zurück auf feinere 2px Kontur */
+    border: 2px solid #53768A; /* Feinere 2px Kontur */
     padding: 14px;
     font-size: 16px;
     font-weight: 700;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease-in-out;
     text-align: center; 
 }
 
-.antwort-btn:hover {
+.antwort-btn:hover:not(:disabled) {
     background-color: #F0DEC6;
     border-color: #B55219;
     color: #B55219;
 }
 
-/* NEU: Vollflächiges Feedback für gedrückte / richtige Buttons */
+/* Farbliche Vollausfüllung + passende Konturen nach der Auswahl */
 .antwort-btn.richtig-vollflaechig {
     background-color: #E8F5E9 !important; /* Hellgrüner Hintergrund */
     border-color: #2E7D32 !important;     /* Grüner Rahmen */
@@ -280,7 +281,7 @@ select {
     color: #C62828 !important;
 }
 
-/* Feedback-Textsatz (Clean textbasiert, ohne Hintergrund, ohne Rahmen) */
+/* Feedback-Textsatz (Clean textbasiert, komplett ohne Hintergrund und ohne Rahmen) */
 .feedback-box {
     min-height: 35px;
     margin-bottom: 15px;
@@ -304,7 +305,7 @@ select {
     color: #C62828 !important;
 }
 
-/* Haupt-Aktionsbuttons */
+/* Haupt-Aktionsbutton */
 .primary-btn {
     width: 100%;
     background-color: #B55219;
