@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinoy Café - Vokabeltrainer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="trainer-container">
+        <div class="logo-area">
+            <span class="mango-emoji">🥭</span>
+            <h1>Pinoy Café</h1>
+            <p class="subtitle">Mabuhay! Lerne Tagalog spielerisch</p>
+        </div>
+
+        <div class="section">
+            <label for="kategorie-select">Wähle eine Kategorie:</label>
+            <select id="kategorie-select">
+                <option value="alle">☕ Alle Wörter</option>
+                <option value="Farben">🎨 Farben</option>
+                <option value="Tiere">🐾 Tiere</option>
+                <option value="Essen">🍲 Essen & Gerichte</option>
+                <option value="Begrüßungen">👋 Begrüßungen</option>
+                <option value="Zahlen">🔢 Zahlen</option>
+            </select>
+        </div>
+
+        <div class="fortschritt">
+            <span>Vokabel: <strong id="aktuelle-frage">1</strong> von <strong id="gesamte-fragen">10</strong></span>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="frage-box">
+            <p>Was bedeutet das Wort?</p>
+            <h2 id="gesuchtes-wort">---</h2>
+        </div>
+
+        <div class="antwort-box">
+            <button class="antwort-btn">---</button>
+            <button class="antwort-btn">---</button>
+            <button class="antwort-btn">---</button>
+            <button class="antwort-btn">---</button>
+        </div>
+
+        <div id="feedback" class="feedback-box"></div>
+
+        <button id="weiter-btn" class="primary-btn">Nächste Frage ➡️</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
