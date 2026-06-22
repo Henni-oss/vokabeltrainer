@@ -29,7 +29,7 @@ body {
     display: none !important;
 }
 
-/* NEU: Logo und Überschrift nebeneinander in einer Zeile */
+/* Logo und Überschrift nebeneinander in einer Zeile */
 .logo-header-row {
     display: flex;
     align-items: center;
@@ -40,13 +40,13 @@ body {
 }
 
 .unified-header {
-    justify-content: flex-start; /* Im Spielbereich linksbündig ausgerichtet */
+    justify-content: flex-start; 
     border-bottom: 2px solid #F0DEC6;
     padding-bottom: 15px;
 }
 
 .cafe-logo {
-    width: 70px; /* Perfekte Größe für die Zeile */
+    width: 70px; 
     height: auto;
     flex-shrink: 0;
 }
@@ -60,7 +60,7 @@ body {
 h1 {
     font-family: 'Cherry Bomb One', cursive;
     color: #B55219; 
-    font-size: 24px; /* Leicht angepasst, damit es perfekt in eine Zeile passt */
+    font-size: 24px; 
     margin: 0;
     line-height: 1.2;
 }
@@ -96,7 +96,7 @@ h1 {
 
 .speech-bubble {
     position: relative;
-    background: #B55219; /* Gewünschtes CI Terracotta */
+    background: #B55219; 
     color: white;
     border-radius: 16px;
     padding: 15px 20px;
@@ -133,6 +133,7 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #F0DEC6;
+    transition: color 0.2s ease;
 }
 
 #gesuchtes-wort {
@@ -141,7 +142,7 @@ h1 {
     font-weight: 700;
 }
 
-/* Kategorien modern & ohne Emojis */
+/* Kategorien modern */
 .section {
     margin-bottom: 20px;
     text-align: left;
@@ -161,7 +162,6 @@ label {
     position: relative;
 }
 
-/* Hochwertigeres Dropdown-Styling */
 select {
     width: 100%;
     padding: 12px 16px;
@@ -205,7 +205,7 @@ select {
     transition: width 0.3s ease;
 }
 
-/* Antworten */
+/* Antworten (ZENTRIERT) */
 .antwort-box {
     display: grid;
     grid-template-columns: 1fr;
@@ -223,8 +223,7 @@ select {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s;
-    text-align: left;
-    padding-left: 20px;
+    text-align: center; 
 }
 
 .antwort-btn:hover {
@@ -233,7 +232,7 @@ select {
     color: #B55219;
 }
 
-/* Feedback-Box mit anpassbarem Inhalt */
+/* Feedback-Box */
 .feedback-box {
     min-height: 45px;
     margin-bottom: 15px;
@@ -262,7 +261,7 @@ select {
     border: 2px solid #8D2B13;
 }
 
-/* Buttons & Clean White Arrow */
+/* Buttons & Clean White Arrow (ZENTRIERT & GRÖSSER) */
 .primary-btn {
     width: 100%;
     background-color: #B55219;
@@ -277,21 +276,24 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px; /* Leicht erhöht für besseres Spacing */
 }
 
 .primary-btn:hover {
     background-color: #8D2B13;
 }
 
+/* Vergrößerter Pfeil, der sich perfekt an der Schriftlinie ausrichtet */
 .white-arrow {
-    width: 20px;
-    height: 20px;
+    width: 24px; /* Von 20px auf 24px vergrößert */
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
     transition: transform 0.2s;
 }
 
 .primary-btn:hover .white-arrow {
-    transform: translateX(4px); /* Schickes Hover-Effektchen für den Pfeil */
+    transform: translateX(5px); 
 }
 
 @keyframes floating {
