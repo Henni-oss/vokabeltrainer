@@ -56,12 +56,23 @@ document.addEventListener("DOMContentLoaded", () => {
     let aktuelleRunde = [];
     let index = 0;
     let richtigesWort = null;
+    let falschZaehler = 0; // Zählt Fehler hintereinander für Kami
+
+    // Aufmunterungssprüche für Kami
+    const kamiSprueche = [
+        "Mach dir keinen Kopf! Aller Anfang ist schwer! 🥭",
+        "Aba! Nicht aufgeben, du lernst gerade etwas Großartiges!",
+        "Kaya mo 'yan! (Du schaffst das!) Versuche es einfach weiter! ✨",
+        "Fehler sind die besten Helfer beim Sprachenlernen! Bleib dran!",
+        "Kami glaubt an dich! Das nächste Mal klappt es wieder! 🧡"
+    ];
 
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const startBtn = document.getElementById('start-btn');
 
     const wortAnzeige = document.getElementById('gesuchtes-wort');
+    const bubbleCaption = document.querySelector('.bubble-caption');
     const antwortButtons = document.querySelectorAll('.antwort-btn');
     const feedbackAnzeige = document.getElementById('feedback');
     const weiterBtn = document.getElementById('weiter-btn');
@@ -89,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (aktuelleRunde.length > 10) aktuelleRunde = aktuelleRunde.slice(0, 10);
 
         index = 0;
+        falschZaehler = 0;
         gesamteFragenAnzeige.textContent = aktuelleRunde.length;
         frageLaden();
     }
@@ -108,6 +120,12 @@ document.addEventListener("DOMContentLoaded", () => {
         weiterBtn.style.display = 'none';
         aktuelleFrageAnzeige.textContent = index + 1;
         
+        // Standard-Text für Kamis Sprechblase wiederherstellen, falls kein Frustmoment aktiv ist
+        if (falschZaehler < 2) {
+            bubbleCaption.textContent = "Was bedeutet das Wort?";
+            bubbleCaption.style.color = "#F0DEC6";
+        }
+
         const prozent = ((index + 1) / aktuelleRunde.length) * 100;
         progressBar.style.width = `${prozent}%`;
 
@@ -135,22 +153,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
             geklickterButton.classList.add('richtig-style');
-            // NEU: Hochwertiges Symbol und ganzer, motivierender Satz
             feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
             feedbackAnzeige.className = "feedback-box richtig-style";
+            falschZaehler = 0; // Counter zurücksetzen bei Erfolg
         } else {
             geklickterButton.classList.add('falsch-style');
-            // NEU: Hochwertiges Symbol und ganzer, erklärender Satz
-            feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die korrekte Antwort lautet: <strong>${richtigesWort.wort_deutsch}</strong>.</span>`;
+            feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
             feedbackAnzeige.className = "feedback-box falsch-style";
             
+            falschZaehler++; // Fehler hochzählen
+            
+            // Wenn man 2 oder mehr Fehler hintereinander macht, springt Kami ein!
+            if (falschZaehler >= 2) {
+                const zufallsSpruch = kamiSprueche[Math.floor(Math.random() * kamiSprueche.length)];
+                bubbleCaption.innerHTML = `<strong>Kami sagt:</strong> ${zufallsSpruch}`;
+                bubbleCaption.style.color = "#FFF4E0"; // Hebt den Spruch visuell leicht ab
+            }
+
             antwortButtons.forEach(btn => {
                 if (btn.textContent === richtigesWort.wort_deutsch) {
                     btn.classList.add('richtig-style');
                 }
             });
         }
-        weiterBtn.style.display = 'flex'; // Als Flexbox einblenden für die zentrierte Pfeilanordnung
+        weiterBtn.style.display = 'flex'; 
     }
 
     antwortButtons.forEach(btn => btn.addEventListener('click', antwortPruefen));
