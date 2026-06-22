@@ -1,6 +1,9 @@
-/* Grunddesign */
+/* Grunddesign & Globale Schriftarten-Garantie */
+body, p, span, button, select, option, strong, h2, label, div {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
 body {
-    font-family: 'Montserrat', sans-serif;
     background-color: #F0DEC6; 
     color: #3B5168;
     display: flex;
@@ -58,7 +61,7 @@ body {
 }
 
 h1 {
-    font-family: 'Cherry Bomb One', cursive;
+    font-family: 'Cherry Bomb One', cursive !important; /* Bewusst für das Logo */
     color: #B55219; 
     font-size: 24px; 
     margin: 0;
@@ -141,7 +144,7 @@ h1 {
     font-weight: 700;
 }
 
-/* Dropdown Menü (Strichstärke angepasst auf 2px wie bei den Buttons) */
+/* Dropdown Menü (2px Rahmen) */
 .section {
     margin-bottom: 20px;
     text-align: left;
@@ -165,9 +168,8 @@ label {
 select {
     width: 100%;
     padding: 14px 20px;
-    border: 2px solid #53768A; /* Strichstärke exakt 2px wie bei den Buttons */
+    border: 2px solid #53768A; 
     border-radius: 14px;
-    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 700; 
     color: #3B5168;
@@ -190,9 +192,9 @@ select {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
 }
 
-/* Fortschritts-Bereich (Unverändert fest linksbündig) */
+/* Fortschritts-Bereich (Unverändert linksbündig) */
 .fortschritt-block {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     text-align: left;
 }
 
@@ -201,7 +203,6 @@ select {
     font-weight: 700;
     color: #53768A;
     margin-bottom: 6px;
-    text-align: left; /* Fest linksbündig */
 }
 
 .progress-bar-container {
@@ -210,7 +211,7 @@ select {
     background-color: #F0DEC6;
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 12px;
+    margin-bottom: 0px; /* Reduziert, damit kein Platzhalter entsteht */
 }
 
 .progress-bar-fill {
@@ -220,12 +221,12 @@ select {
     transition: width 0.3s ease;
 }
 
-/* Horizontal zentrierter Streak unter dem Balken */
+/* NEU: Optimierter Streak-Container ohne fixe Höhe */
 .streak-center-container {
-    display: flex;
+    display: none; /* Komplett unsichtbar im Normalzustand -> verhindert Lücken! */
     justify-content: center;
     width: 100%;
-    min-height: 32px; 
+    margin-top: 14px; /* Schafft nur Platz, wenn es aktiv angezeigt wird */
 }
 
 .streak-badge {
@@ -241,7 +242,7 @@ select {
     animation: pulseStreak 1.5s infinite alternate;
 }
 
-/* Antwort-Buttons (Feine 2px Kontur) */
+/* Antwort-Buttons (2px Kontur) */
 .antwort-box {
     display: grid;
     grid-template-columns: 1fr;
@@ -252,7 +253,7 @@ select {
 .antwort-btn {
     background-color: #ffffff;
     color: #3B5168;
-    border: 2px solid #53768A; /* Feinere 2px Kontur */
+    border: 2px solid #53768A; 
     padding: 14px;
     font-size: 16px;
     font-weight: 700;
@@ -270,18 +271,18 @@ select {
 
 /* Farbliche Vollausfüllung + passende Konturen nach der Auswahl */
 .antwort-btn.richtig-vollflaechig {
-    background-color: #E8F5E9 !important; /* Hellgrüner Hintergrund */
-    border-color: #2E7D32 !important;     /* Grüner Rahmen */
+    background-color: #E8F5E9 !important; 
+    border-color: #2E7D32 !important;     
     color: #2E7D32 !important;
 }
 
 .antwort-btn.falsch-vollflaechig {
-    background-color: #FFEBEE !important;  /* Hellroter Hintergrund */
-    border-color: #C62828 !important;      /* Roter Rahmen */
+    background-color: #FFEBEE !important;  
+    border-color: #C62828 !important;      
     color: #C62828 !important;
 }
 
-/* Feedback-Textsatz (Clean textbasiert, komplett ohne Hintergrund und ohne Rahmen) */
+/* Feedback-Box */
 .feedback-box {
     min-height: 35px;
     margin-bottom: 15px;
