@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pinoy Café - Vokabeltrainer</title>
+    <title>Dein Pinoy Vokabeltrainer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,11 +11,27 @@
 </head>
 <body>
 
-    <div class="trainer-container">
+    <div id="start-screen" class="trainer-container">
         <div class="logo-area">
-            <span class="mango-emoji">🥭</span>
-            <h1>Pinoy Café</h1>
-            <p class="subtitle">Mabuhay! Lerne Tagalog spielerisch</p>
+            <img src="image_708c46.png" alt="Pinoy Café Logo" class="cafe-logo">
+            <h1>Dein Pinoy Vokabeltrainer</h1>
+        </div>
+        
+        <div class="welcome-box">
+            <img src="Kami_winkend_orange.png" alt="Kami die Mango" class="kami-welcome-img">
+            <div class="speech-bubble welcome-bubble">
+                <p><strong>Mabuhay! Ich bin Kami! 🥭</strong></p>
+                <p>Lass uns gemeinsam auf die Reise gehen und eine neue Sprache lernen. Bist du bereit?</p>
+            </div>
+        </div>
+
+        <button id="start-btn" class="primary-btn">Reise starten! 🚀</button>
+    </div>
+
+    <div id="game-screen" class="trainer-container hidden">
+        <div class="logo-area-game">
+            <img src="image_708c46.png" alt="Pinoy Café Logo" class="cafe-logo-small">
+            <h1>Dein Pinoy Vokabeltrainer</h1>
         </div>
 
         <div class="section">
@@ -37,9 +53,12 @@
             </div>
         </div>
 
-        <div class="frage-box">
-            <p>Was bedeutet das Wort?</p>
-            <h2 id="gesuchtes-wort">---</h2>
+        <div class="kami-frage-container">
+            <img src="Kami_winkend_orange.png" alt="Kami" class="kami-avatar">
+            <div class="speech-bubble">
+                <p class="bubble-caption">Was bedeutet das Wort?</p>
+                <h2 id="gesuchtes-wort">---</h2>
+            </div>
         </div>
 
         <div class="antwort-box">
