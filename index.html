@@ -11,16 +11,14 @@
 </head>
 <body>
 
-    <!-- STARTSEITE (Duolingo Style) -->
     <div id="start-screen" class="trainer-container">
         <div class="logo-area">
-            <!-- Fallback integriert: Falls das PNG fehlt, wird ein hübsches Ersatzsymbol geladen -->
-            <img src="image_708c46.png" alt="Pinoy Café Logo" class="cafe-logo" onerror="this.onerror=null; this.src='https://img.icons8.com/fluent/96/mango.png';">
+            <img src="image_708c46.png" alt="Pinoy Café Logo" class="cafe-logo" onerror="this.onerror=null; this.src='Image_708c46.png'; this.onerror=function(){this.src='https://img.icons8.com/fluent/96/mango.png';};">
             <h1>Dein Pinoy Vokabeltrainer</h1>
         </div>
         
         <div class="welcome-box">
-            <img src="kami_winkend_orange.png" alt="Kami die Mango" class="kami-welcome-img" onerror="this.onerror=null; this.src='https://img.icons8.com/fluent/144/mango.png';">
+            <img src="Kami_winkend_orange.png" alt="Kami die Mango" class="kami-welcome-img" onerror="this.onerror=null; this.src='Kami_winkend_orange.PNG'; this.onerror=function(){this.src='https://img.icons8.com/fluent/144/mango.png';};">
             <div class="speech-bubble welcome-bubble">
                 <p><strong>Mabuhay! Ich bin Kami! 🥭</strong></p>
                 <p>Lass uns gemeinsam auf die Reise gehen und eine neue Sprache lernen. Bist du bereit?</p>
@@ -30,14 +28,12 @@
         <button id="start-btn" class="primary-btn">Reise starten! 🚀</button>
     </div>
 
-    <!-- HAUPT-TRAINER AREA -->
     <div id="game-screen" class="trainer-container hidden">
         <div class="logo-area-game">
-            <img src="image_708c46.png" alt="Pinoy Café Logo" class="cafe-logo-small" onerror="this.onerror=null; this.src='https://img.icons8.com/fluent/48/mango.png';">
+            <img src="image_708c46.png" alt="Pinoy Café Logo" class="cafe-logo-small" onerror="this.onerror=null; this.src='Image_708c46.png'; this.onerror=function(){this.src='https://img.icons8.com/fluent/48/mango.png';};">
             <h1>Dein Pinoy Vokabeltrainer</h1>
         </div>
 
-        <!-- Themenauswahl -->
         <div class="section">
             <label for="kategorie-select">Wähle eine Kategorie:</label>
             <select id="kategorie-select">
@@ -50,7 +46,6 @@
             </select>
         </div>
 
-        <!-- Fortschritt -->
         <div class="fortschritt">
             <span>Vokabel: <strong id="aktuelle-frage">1</strong> von <strong id="gesamte-fragen">10</strong></span>
             <div class="progress-bar-container">
@@ -58,16 +53,14 @@
             </div>
         </div>
 
-        <!-- Fragebereich mit Kami -->
         <div class="kami-frage-container">
-            <img src="kami_winkend_orange.png" alt="Kami" class="kami-avatar" onerror="this.onerror=null; this.src='https://img.icons8.com/fluent/96/mango.png';">
+            <img src="Kami_winkend_orange.png" alt="Kami" class="kami-avatar" onerror="this.onerror=null; this.src='Kami_winkend_orange.PNG'; this.onerror=function(){this.src='https://img.icons8.com/fluent/96/mango.png';};">
             <div class="speech-bubble">
                 <p class="bubble-caption">Was bedeutet das Wort?</p>
                 <h2 id="gesuchtes-wort">---</h2>
             </div>
         </div>
 
-        <!-- Antworten -->
         <div class="antwort-box">
             <button class="antwort-btn">---</button>
             <button class="antwort-btn">---</button>
@@ -75,10 +68,8 @@
             <button class="antwort-btn">---</button>
         </div>
 
-        <!-- Feedback -->
         <div id="feedback" class="feedback-box"></div>
 
-        <!-- Weiter-Button -->
         <button id="weiter-btn" class="primary-btn">Nächste Frage ➡️</button>
     </div>
 
