@@ -1,4 +1,3 @@
-// Sicherstellen, dass das Skript erst läuft, wenn das HTML geladen ist
 document.addEventListener("DOMContentLoaded", () => {
 
     const alleVokabeln = [
@@ -58,12 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let index = 0;
     let richtigesWort = null;
 
-    // Screens greifen
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const startBtn = document.getElementById('start-btn');
 
-    // Trainer Elemente greifen
     const wortAnzeige = document.getElementById('gesuchtes-wort');
     const antwortButtons = document.querySelectorAll('.antwort-btn');
     const feedbackAnzeige = document.getElementById('feedback');
@@ -73,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressBar = document.getElementById('progress-bar');
     const kategorieSelect = document.getElementById('kategorie-select');
 
-    // START-BUTTON EVENT
     if (startBtn) {
         startBtn.addEventListener('click', () => {
             startScreen.classList.add('hidden');
@@ -100,14 +96,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function frageLaden() {
         if (index >= aktuelleRunde.length) {
             wortAnzeige.textContent = "🎉 Sige na!";
-            feedbackAnzeige.textContent = "Reise beendet! Du wirst immer besser.";
-            feedbackAnzeige.className = "feedback-box richtig";
+            feedbackAnzeige.innerHTML = "<span>✨ <strong>Ausgezeichnet!</strong> Du hast deine Reise für diese Runde beendet.</span>";
+            feedbackAnzeige.className = "feedback-box richtig-style";
             antwortButtons.forEach(btn => btn.style.display = 'none');
             weiterBtn.style.display = 'none';
             return;
         }
 
         feedbackAnzeige.textContent = "";
+        feedbackAnzeige.className = "feedback-box";
         weiterBtn.style.display = 'none';
         aktuelleFrageAnzeige.textContent = index + 1;
         
@@ -115,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         progressBar.style.width = `${prozent}%`;
 
         richtigesWort = aktuelleRunde[index];
-        wortAnzeige.textContent = StadiumWort(richtigesWort.wort_tagalog);
+        wortAnzeige.textContent = richtigesWort.wort_tagalog;
 
         let falscheOptionen = alleVokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
         falscheOptionen.sort(() => Math.random() - 0.5);
@@ -131,10 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function StadiumWort(wort) {
-        return wort;
-    }
-
     function antwortPruefen(e) {
         const geklickterButton = e.target;
         const gewaehlteAntwort = geklickterButton.textContent;
@@ -142,19 +135,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
             geklickterButton.classList.add('richtig-style');
-            feedbackAnzeige.textContent = "✨ Magaling! (Super!)";
-            feedbackAnzeige.className = "feedback-box richtig";
+            // NEU: Hochwertiges Symbol und ganzer, motivierender Satz
+            feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
+            feedbackAnzeige.className = "feedback-box richtig-style";
         } else {
             geklickterButton.classList.add('falsch-style');
-            feedbackAnzeige.textContent = `Mali! Richtig: ${richtigesWort.wort_deutsch}`;
-            feedbackAnzeige.className = "feedback-box falsch";
+            // NEU: Hochwertiges Symbol und ganzer, erklärender Satz
+            feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die korrekte Antwort lautet: <strong>${richtigesWort.wort_deutsch}</strong>.</span>`;
+            feedbackAnzeige.className = "feedback-box falsch-style";
+            
             antwortButtons.forEach(btn => {
                 if (btn.textContent === richtigesWort.wort_deutsch) {
                     btn.classList.add('richtig-style');
                 }
             });
         }
-        weiterBtn.style.display = 'block';
+        weiterBtn.style.display = 'flex'; // Als Flexbox einblenden für die zentrierte Pfeilanordnung
     }
 
     antwortButtons.forEach(btn => btn.addEventListener('click', antwortPruefen));
