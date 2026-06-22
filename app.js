@@ -75,14 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const streakBadge = document.getElementById('streak-badge');
     const streakText = document.getElementById('streak-text');
 
-    // Steuerung des interaktiven Dropdown-Pfeils (Auf- und Zuklappen)
+    // Dropdown-Pfeilsteuerung
     if (kategorieSelect) {
         kategorieSelect.addEventListener('click', (e) => {
             e.stopPropagation();
             selectWrapper.classList.toggle('open');
         });
         
-        // Schließt den Pfeil, wenn man außerhalb klickt
         document.addEventListener('click', () => {
             selectWrapper.classList.remove('open');
         });
@@ -148,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         antwortButtons.forEach((btn, i) => {
             btn.style.display = 'block';
             btn.textContent = optionen[i];
-            btn.className = "antwort-btn"; // Reset Klassen
+            btn.className = "antwort-btn"; // Setzt alle Klassen zurück
             btn.disabled = false;
         });
     }
@@ -156,13 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function antwortPruefen(e) {
         const geklickterButton = e.target;
         const gewaehlteAntwort = geklickterButton.textContent;
+        
+        // Alle Buttons sperren, damit man nicht mehrfach klickt
         antwortButtons.forEach(btn => btn.disabled = true);
 
         if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
-            // Kontur des Buttons grün färben
-            geklickterButton.classList.add('richtig-kontur');
+            // FIX: Jetzt wird die Klasse für vollflächige Färbung sauber hinzugefügt!
+            geklickterButton.classList.add('richtig-vollflaechig');
             
-            // Streak sofort ab der 1. richtigen Vokabel einblenden und updaten!
             streakZaehler++;
             streakText.textContent = `${streakZaehler}x richtig! 🔥`;
             streakBadge.classList.remove('hidden');
@@ -170,20 +170,19 @@ document.addEventListener("DOMContentLoaded", () => {
             feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
             feedbackAnzeige.className = "feedback-box richtig-text";
         } else {
-            // Kontur des geklickten Buttons rot färben
-            geklickterButton.classList.add('falsch-kontur');
+            // FIX: Geklickter Button wird sofort vollflächig rot gefärbt
+            geklickterButton.classList.add('falsch-vollflaechig');
             
-            // Streak bricht ab
             streakZaehler = 0;
             streakBadge.classList.add('hidden');
 
             feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
             feedbackAnzeige.className = "feedback-box falsch-text";
             
-            // Richtigen Button grün umranden, damit man sieht, was gestimmt hätte
+            // FIX: Richtige Option wird im selben Moment vollflächig grün hervorgehoben
             antwortButtons.forEach(btn => {
                 if (btn.textContent === richtigesWort.wort_deutsch) {
-                    btn.classList.add('richtig-kontur');
+                    btn.classList.add('richtig-vollflaechig');
                 }
             });
         }
