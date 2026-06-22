@@ -1,0 +1,201 @@
+/* Grundlegendes Design im Pinoy-Café-Look */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F0DEC6; /* Warmer Creme-Hintergrund aus der PDF */
+    color: #3B5168; /* Dunkelblau für hervorragende Lesbarkeit */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Die Hauptkarte des Trainers */
+.trainer-container {
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(141, 43, 19, 0.15); /* Sanfter Schatten mit einem Hauch von Dunkelrot */
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    border: 3px solid #53768A; /* Pinoy Blau/Grau Rahmen */
+}
+
+/* Header & Logo */
+.logo-area {
+    margin-bottom: 25px;
+}
+
+.mango-emoji {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 5px;
+    animation: bounce 2s infinite;
+}
+
+h1 {
+    font-family: 'Cherry Bomb One', cursive; /* Die offizielle CI-Überschriftenschrift */
+    color: #B55219; /* Terracotta-Orange */
+    font-size: 36px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #53768A;
+    margin: 5px 0 0 0;
+    font-weight: 600;
+}
+
+/* Kategorien-Auswahl */
+.section {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #3B5168;
+    text-transform: uppercase;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    background-color: #ffffff;
+    color: #3B5168;
+    border: 2px solid #53768A;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Fortschrittsanzeige & Ladebalken */
+.fortschritt {
+    font-size: 14px;
+    font-weight: 700;
+    color: #53768A;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: #F0DEC6;
+    border-radius: 4px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    width: 10%;
+    height: 100%;
+    background-color: #DBA022; /* Schönes Mango-Gelb */
+    transition: width 0.3s ease;
+}
+
+/* Das gesuchte Wort */
+.frage-box {
+    background-color: #53768A; /* Pinoy Blau als Kasten-Hintergrund */
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    color: #ffffff;
+}
+
+.frage-box p {
+    margin: 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #F0DEC6;
+}
+
+#gesuchtes-wort {
+    margin: 8px 0 0 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* Antwort-Knöpfe */
+.antwort-box {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.antwort-btn {
+    background-color: #ffffff;
+    color: #3B5168;
+    border: 2px solid #53768A;
+    padding: 14px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.antwort-btn:hover {
+    background-color: #F0DEC6;
+    border-color: #B55219;
+    color: #B55219;
+}
+
+/* Feedback-Animationen */
+.feedback-box {
+    min-height: 30px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.richtig-style {
+    background-color: #e8f5e9 !important;
+    border-color: #4caf50 !important;
+    color: #4caf50 !important;
+}
+
+.falsch-style {
+    background-color: #ffebee !important;
+    border-color: #8D2B13 !important; /* Dunkelrot aus CI */
+    color: #8D2B13 !important;
+}
+
+/* Weiter-Button */
+.primary-btn {
+    width: 100%;
+    background-color: #B55219; /* Haupt-Button in Terracotta */
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 4px 12px rgba(181, 82, 25, 0.3);
+}
+
+.primary-btn:hover {
+    background-color: #8D2B13; /* Wird beim Hover dunkler (Dunkelrot) */
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
