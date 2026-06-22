@@ -1,4 +1,3 @@
-// Testdaten direkt aus deiner CSV-Vorlage für das Pinoy Café
 const alleVokabeln = [
     { kategorie: "Farben", wort_deutsch: "Rot", wort_tagalog: "Pula" },
     { kategorie: "Farben", wort_deutsch: "Blau", wort_tagalog: "Asul" },
@@ -56,7 +55,12 @@ let aktuelleRunde = [];
 let index = 0;
 let richtigesWort = null;
 
-// HTML Elemente greifen
+// Screens greifen
+const startScreen = document.getElementById('start-screen');
+const gameScreen = document.getElementById('game-screen');
+const startBtn = document.getElementById('start-btn');
+
+// Trainer Elemente greifen
 const wortAnzeige = document.getElementById('gesuchtes-wort');
 const antwortButtons = document.querySelectorAll('.antwort-btn');
 const feedbackAnzeige = document.getElementById('feedback');
@@ -66,21 +70,21 @@ const gesamteFragenAnzeige = document.getElementById('gesamte-fragen');
 const progressBar = document.getElementById('progress-bar');
 const kategorieSelect = document.getElementById('kategorie-select');
 
-// Spiel starten
+// START-BUTTON EVENT (Wechsel von Startseite zum Spiel)
+startBtn.addEventListener('click', () => {
+    startScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+    spielInitialisieren();
+});
+
 function spielInitialisieren() {
     const gewaehlteKategorie = kategorieSelect.value;
-    
-    // Filtern nach Kategorie
     if (gewaehlteKategorie === "alle") {
         aktuelleRunde = [...alleVokabeln];
     } else {
         aktuelleRunde = alleVokabeln.filter(v => v.kategorie === gewaehlteKategorie);
     }
-
-    // Wörter zufällig mischen (Shuffling)
     aktuelleRunde.sort(() => Math.random() - 0.5);
-    
-    // Maximal 10 Fragen pro Runde festlegen
     if (aktuelleRunde.length > 10) aktuelleRunde = aktuelleRunde.slice(0, 10);
 
     index = 0;
@@ -90,40 +94,34 @@ function spielInitialisieren() {
 
 function frageLaden() {
     if (index >= aktuelleRunde.length) {
-        wortAnzeige.textContent = "🎉 Fertig!";
-        feedbackAnzeige.textContent = "Gut gemacht! Wähle ein neues Thema.";
+        wortAnzeige.textContent = "🎉 Sige na!";
+        feedbackAnzeige.textContent = "Reise beendet! Du wirst immer besser.";
         feedbackAnzeige.className = "feedback-box richtig";
         antwortButtons.forEach(btn => btn.style.display = 'none');
         weiterBtn.style.display = 'none';
         return;
     }
 
-    // UI zurücksetzen
     feedbackAnzeige.textContent = "";
     weiterBtn.style.display = 'none';
     aktuelleFrageAnzeige.textContent = index + 1;
     
-    // Fortschrittsbalken berechnen
     const prozent = ((index + 1) / aktuelleRunde.length) * 100;
     progressBar.style.width = `${prozent}%`;
 
-    // Aktuelle Vokabel bestimmen
     richtigesWort = aktuelleRunde[index];
     wortAnzeige.textContent = richtigesWort.wort_tagalog;
 
-    // Falsche Antworten für Multiple Choice suchen
     let falscheOptionen = alleVokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
     falscheOptionen.sort(() => Math.random() - 0.5);
 
-    // 4 Optionen zusammenstellen (1 richtige + 3 falsche)
     let optionen = [richtigesWort.wort_deutsch, falscheOptionen[0].wort_deutsch, falscheOptionen[1].wort_deutsch, falscheOptionen[2].wort_deutsch];
-    optionen.sort(() => Math.random() - 0.5); // Knöpfe durchmischen
+    optionen.sort(() => Math.random() - 0.5);
 
-    // Knöpfe beschriften
     antwortButtons.forEach((btn, i) => {
         btn.style.display = 'block';
         btn.textContent = optionen[i];
-        btn.className = "antwort-btn"; // Reset der Klassen
+        btn.className = "antwort-btn";
         btn.disabled = false;
     });
 }
@@ -131,20 +129,16 @@ function frageLaden() {
 function antwortPruefen(e) {
     const geklickterButton = e.target;
     const gewaehlteAntwort = geklickterButton.textContent;
-
-    // Alle Knöpfe für diese Runde deaktivieren
     antwortButtons.forEach(btn => btn.disabled = true);
 
     if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
         geklickterButton.classList.add('richtig-style');
-        feedbackAnzeige.textContent = "✨ Magaling! (Richtig!)";
+        feedbackAnzeige.textContent = "✨ Magaling! (Super!)";
         feedbackAnzeige.className = "feedback-box richtig";
     } else {
         geklickterButton.classList.add('falsch-style');
-        feedbackAnzeige.textContent = `Mali! Richtig wäre: ${richtigesWort.wort_deutsch}`;
+        feedbackAnzeige.textContent = `Mali! Richtig: ${richtigesWort.wort_deutsch}`;
         feedbackAnzeige.className = "feedback-box falsch";
-
-        // Den richtigen Knopf grün aufleuchten lassen, damit man lernt
         antwortButtons.forEach(btn => {
             if (btn.textContent === richtigesWort.wort_deutsch) {
                 btn.classList.add('richtig-style');
@@ -154,13 +148,9 @@ function antwortPruefen(e) {
     weiterBtn.style.display = 'block';
 }
 
-// Event Listener aktivieren
 antwortButtons.forEach(btn => btn.addEventListener('click', antwortPruefen));
 weiterBtn.addEventListener('click', () => {
     index++;
     frageLaden();
 });
 kategorieSelect.addEventListener('change', spielInitialisieren);
-
-// Erster Start
-spielInitialisieren();
