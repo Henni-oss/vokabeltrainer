@@ -1,7 +1,7 @@
 /* Grunddesign */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #F0DEC6; /* Warmer Creme-Hintergrund */
+    background-color: #F0DEC6; 
     color: #3B5168;
     display: flex;
     justify-content: center;
@@ -25,34 +25,49 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Sichtbarkeit steuern (für die Startseite) */
 .hidden {
     display: none !important;
 }
 
-/* Logos */
+/* NEU: Logo und Überschrift nebeneinander in einer Zeile */
+.logo-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.unified-header {
+    justify-content: flex-start; /* Im Spielbereich linksbündig ausgerichtet */
+    border-bottom: 2px solid #F0DEC6;
+    padding-bottom: 15px;
+}
+
 .cafe-logo {
-    width: 120px;
+    width: 70px; /* Perfekte Größe für die Zeile */
     height: auto;
-    margin-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .cafe-logo-small {
-    width: 60px;
+    width: 50px;
     height: auto;
-    margin-bottom: 5px;
+    flex-shrink: 0;
 }
 
 h1 {
     font-family: 'Cherry Bomb One', cursive;
-    color: #B55219; /* Terracotta-Orange */
-    font-size: 28px;
+    color: #B55219; 
+    font-size: 24px; /* Leicht angepasst, damit es perfekt in eine Zeile passt */
     margin: 0;
+    line-height: 1.2;
 }
 
-/* Startseiten-Animation & Box */
+/* Willkommensbox */
 .welcome-box {
-    margin: 30px 0;
+    margin: 25px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,12 +75,12 @@ h1 {
 }
 
 .kami-welcome-img {
-    width: 140px;
+    width: 130px;
     height: auto;
     animation: floating 3s ease-in-out infinite;
 }
 
-/* Duolingo Sprechblasen-Design */
+/* Duolingo Sprechblase */
 .kami-frage-container {
     display: flex;
     align-items: center;
@@ -75,20 +90,19 @@ h1 {
 }
 
 .kami-avatar {
-    width: 90px;
+    width: 85px;
     height: auto;
 }
 
 .speech-bubble {
     position: relative;
-    background: #B55219; /* Gewünschtes Terracotta anstelle von Blau */
+    background: #B55219; /* Gewünschtes CI Terracotta */
     color: white;
     border-radius: 16px;
     padding: 15px 20px;
     flex-grow: 1;
 }
 
-/* Der kleine Pfeil der Sprechblase */
 .speech-bubble:after {
     content: '';
     position: absolute;
@@ -103,7 +117,7 @@ h1 {
 }
 
 .welcome-bubble {
-    background: #53768A; /* Blaue Blase nur für das Willkommen */
+    background: #53768A; 
 }
 .welcome-bubble:after {
     border-color: transparent transparent #53768A transparent;
@@ -127,7 +141,7 @@ h1 {
     font-weight: 700;
 }
 
-/* Kategorien & Fortschritt */
+/* Kategorien modern & ohne Emojis */
 .section {
     margin-bottom: 20px;
     text-align: left;
@@ -136,25 +150,42 @@ h1 {
 label {
     display: block;
     margin-bottom: 6px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #53768A;
 }
 
+.select-wrapper {
+    position: relative;
+}
+
+/* Hochwertigeres Dropdown-Styling */
 select {
     width: 100%;
-    padding: 10px;
+    padding: 12px 16px;
     border: 2px solid #53768A;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 15px;
     font-weight: 600;
+    color: #3B5168;
+    background-color: #ffffff;
     outline: none;
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
 }
 
+/* Fortschritt */
 .fortschritt {
     font-size: 13px;
     font-weight: 700;
     color: #53768A;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     text-align: left;
 }
 
@@ -170,11 +201,11 @@ select {
 .progress-bar-fill {
     width: 0%;
     height: 100%;
-    background-color: #DBA022; /* Mango-Gelb */
+    background-color: #DBA022; 
     transition: width 0.3s ease;
 }
 
-/* Antwort-Knöpfe */
+/* Antworten */
 .antwort-box {
     display: grid;
     grid-template-columns: 1fr;
@@ -192,6 +223,8 @@ select {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s;
+    text-align: left;
+    padding-left: 20px;
 }
 
 .antwort-btn:hover {
@@ -200,27 +233,36 @@ select {
     color: #B55219;
 }
 
-/* Feedback & Klassen */
+/* Feedback-Box mit anpassbarem Inhalt */
 .feedback-box {
-    min-height: 30px;
+    min-height: 45px;
     margin-bottom: 15px;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .richtig-style {
     background-color: #e8f5e9 !important;
     border-color: #4caf50 !important;
-    color: #4caf50 !important;
+    color: #2e7d32 !important;
+    border: 2px solid #4caf50;
 }
 
 .falsch-style {
     background-color: #ffebee !important;
     border-color: #8D2B13 !important;
     color: #8D2B13 !important;
+    border: 2px solid #8D2B13;
 }
 
-/* Buttons */
+/* Buttons & Clean White Arrow */
 .primary-btn {
     width: 100%;
     background-color: #B55219;
@@ -232,13 +274,26 @@ select {
     border-radius: 12px;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(181, 82, 25, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .primary-btn:hover {
     background-color: #8D2B13;
 }
 
-/* Animationen */
+.white-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s;
+}
+
+.primary-btn:hover .white-arrow {
+    transform: translateX(4px); /* Schickes Hover-Effektchen für den Pfeil */
+}
+
 @keyframes floating {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
