@@ -16,7 +16,7 @@
         <div class="header-nav-wrapper">
             <div class="logo-header-row">
                 <img src="logo.png" id="header-logo" class="cafe-logo-small" alt="Logo">
-                <h1 id="main-heading">Alle Wörter</h1>
+                <h1 id="main-heading">DEIN PINOY VOKABELTRAINER</h1>
             </div>
 
             <button id="menu-toggle" class="hamburger-menu" aria-label="Menü öffnen">
@@ -52,15 +52,18 @@
         </div>
 
         <div id="start-screen" class="screen-content">
-            <div class="welcome-box">
-                <div class="speech-bubble bubble-top">
-                    <p style="margin: 0; font-weight: 600;">Lerne Vokabeln mit Kami!</p>
-                </div>
+            
+            <div class="speech-bubble">
+                <p style="margin: 0 0 8px 0; font-weight: 700; font-size: 18px;">Mabuhay! Ich bin Kami! 🥭</p>
+                <p style="margin: 0; font-weight: 400; font-size: 14px; line-height: 1.4;">Lass uns gemeinsam auf die Reise gehen und eine neue Sprache lernen. Bist du bereit?</p>
+            </div>
+
+            <div class="welcome-box" style="margin-top: 10px;">
                 <img src="kami_mango.png" class="kami-welcome-img" alt="Kami">
             </div>
 
             <div class="category-start-section">
-                <label for="main-category-select">Wähle eine Kategorie:</label>
+                <label for="main-category-select">Kategorie wählen</label>
                 <div class="select-wrapper" id="main-category-dropdown-wrapper">
                     <select id="main-category-select">
                         </select>
@@ -68,10 +71,7 @@
             </div>
 
             <button id="start-btn" class="primary-btn">
-                <span>Jetzt Starten</span>
-                <svg class="white-arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                <span>Reise starten! 🚀</span>
             </button>
         </div>
 
@@ -79,7 +79,7 @@
             <div class="kami-frage-container">
                 <img src="kami_mango.png" class="kami-avatar" alt="Kami">
                 <div class="speech-bubble">
-                    <p class="bubble-caption">Was heißt:</p>
+                    <p class="bubble-caption">Was bedeutet das Wort?</p>
                     <p id="gesuchtes-wort">Wort</p>
                 </div>
             </div>
@@ -94,7 +94,7 @@
             <div id="feedback" class="feedback-box"></div>
 
             <div class="fortschritt-block">
-                <div class="fortschritt-info" id="progress-text">Fortschritt: 0/0</div>
+                <div class="fortschritt-info" id="progress-text">Vokabel: 0 von 0</div>
                 <div class="progress-bar-container">
                     <div id="progress-bar" class="progress-bar-fill"></div>
                 </div>
@@ -105,10 +105,7 @@
             </div>
 
             <button id="next-btn" class="primary-btn hidden" style="margin-top: 15px;">
-                <span>Weiter</span>
-                <svg class="white-arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                <span>Nächste Frage ➔</span>
             </button>
         </div>
 
