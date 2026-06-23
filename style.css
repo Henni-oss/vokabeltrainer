@@ -36,16 +36,52 @@ body {
     width: 100%;
 }
 
-/* HEADER NAVIGATION (MENÜ RECHTS OBEN) */
+/* HEADER NAVIGATION (LOGO LINKS, MENÜ RECHTS) */
 .header-nav-wrapper {
     position: relative;
     margin-bottom: 25px;
     padding-top: 10px;
 }
 
+.logo-header-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    padding-right: 35px; /* Platz für das Hamburger-Menü rechts */
+}
+
+.unified-header {
+    justify-content: flex-start; 
+    border-bottom: 2px solid #F0DEC6;
+    padding-bottom: 15px;
+}
+
+.cafe-logo-small {
+    width: 45px;
+    height: auto;
+    flex-shrink: 0;
+    display: block !important; /* Bleibt dauerhaft sichtbar */
+}
+
+h1 {
+    font-family: 'Cherry Bomb One', cursive !important;
+    color: #B55219; 
+    font-size: 22px; 
+    margin: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+    transition: font-size 0.2s ease;
+}
+
+/* Verkleinert die H1 im Spiel-Modus leicht, damit Logo + Kapitelname perfekt nebeneinander passen */
+.game-active h1 {
+    font-size: 18px;
+}
+
 .hamburger-menu {
     position: absolute;
-    right: 0; /* Geändert nach rechts */
+    right: 0; 
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
@@ -69,41 +105,11 @@ body {
     transition: all 0.25s ease;
 }
 
-/* Logo und Überschrift */
-.logo-header-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-align: left;
-    padding-right: 42px; /* Rechts Platz für das Hamburger-Icon schaffen */
-}
-
-.unified-header {
-    justify-content: flex-start; 
-    border-bottom: 2px solid #F0DEC6;
-    padding-bottom: 15px;
-}
-
-.cafe-logo-small {
-    width: 45px;
-    height: auto;
-    flex-shrink: 0;
-}
-
-h1 {
-    font-family: 'Cherry Bomb One', cursive !important;
-    color: #B55219; 
-    font-size: 22px; 
-    margin: 0;
-    line-height: 1.2;
-    text-transform: uppercase;
-}
-
 /* NAVIGATION OVERLAY DESIGN */
 .nav-overlay {
     position: absolute;
     top: 0;
-    left: 100%; /* Startet außerhalb des rechten Rands */
+    left: 100%; 
     width: 100%;
     height: 100%;
     background-color: rgba(83, 118, 138, 0.98); 
@@ -116,13 +122,13 @@ h1 {
 }
 
 .nav-overlay.open {
-    left: 0; /* Schiebt sich flüssig von rechts rein */
+    left: 0; 
 }
 
 .close-btn {
     position: absolute;
     top: 25px;
-    right: 25px; /* Schließen ebenfalls rechts oben */
+    right: 25px; 
     font-size: 38px;
     background: transparent;
     border: none;
@@ -134,23 +140,62 @@ h1 {
 .nav-links {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    text-align: center;
+    gap: 30px;
+    text-align: left;
+    width: 75%;
 }
 
 .nav-links a {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     text-decoration: none;
-    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.nav-links a:hover {
-    color: #F0DEC6;
+/* Hover-Effekt: Text bleibt weiß, kriegt Unterstreichung */
+.nav-links a:hover span {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
 }
 
-/* WILLKOMMENSBOX: KAMI UNTER SPRECHBLASE */
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+/* Kategoriebereich im Menü */
+.nav-category-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-static-item {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Weißes Dropdown fürs Menü */
+.white-select select {
+    border-color: #ffffff !important;
+    color: #53768A !important;
+    background-color: #ffffff !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") !important;
+}
+.white-select.open select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>") !important;
+}
+
+/* WILLKOMMENSBOX */
 .welcome-box {
     margin: 15px 0 25px 0;
     display: flex;
@@ -188,7 +233,7 @@ h1 {
     width: 0;
 }
 
-/* KAMI IM TEST-MODUS */
+/* TEST MODUS */
 .kami-frage-container {
     display: flex;
     align-items: center;
@@ -238,7 +283,7 @@ h1 {
     font-weight: 700;
 }
 
-/* KATEGORIEAUSWAHL */
+/* DROP-DOWNS GENERAL */
 .category-start-section {
     margin-bottom: 25px;
     text-align: left;
@@ -284,7 +329,7 @@ select {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
 }
 
-/* BALKEN */
+/* FORTSCHRITTS-BALKEN & STRYSYMMETRISCHER STREAK */
 .fortschritt-block {
     margin-bottom: 20px;
     text-align: left;
@@ -312,12 +357,13 @@ select {
     transition: width 0.3s ease;
 }
 
-/* STREAK DYNAMISCH */
+/* OPTIMIERTER SYMMETRISCHER STREAK-CONTAINER */
 .streak-center-container {
     display: none; 
     justify-content: center;
     width: 100%;
-    margin-top: 14px; 
+    margin-top: 14px;     /* Abstand vom Balken nach unten zum Streak */
+    margin-bottom: 14px;  /* FIX: Identischer Abstand vom Streak nach unten zum Kami-Bereich! */
 }
 
 .streak-badge {
@@ -333,7 +379,7 @@ select {
     animation: pulseStreak 1.5s infinite alternate;
 }
 
-/* BUTTONS */
+/* ANTWORTEN & FEEDBACK */
 .antwort-box {
     display: grid;
     grid-template-columns: 1fr;
