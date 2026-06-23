@@ -59,11 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let streakZaehler = 0;
 
     // DOM-Elemente
+    const container = document.querySelector('.trainer-container');
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const startBtn = document.getElementById('start-btn');
     const mainHeading = document.getElementById('main-heading');
-    const headerLogo = document.getElementById('header-logo');
 
     const wortAnzeige = document.getElementById('gesuchtes-wort');
     const antwortButtons = document.querySelectorAll('.antwort-btn');
@@ -78,21 +78,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const streakContainer = document.getElementById('streak-container');
     const streakText = document.getElementById('streak-text');
 
-    // Menü-Elemente
+    // Navigation & Dropdown im Menü
     const menuToggle = document.getElementById('menu-toggle');
     const sideNav = document.getElementById('side-nav');
     const navClose = document.getElementById('nav-close');
     const navHome = document.getElementById('nav-home');
-    const navRestart = document.getElementById('nav-restart');
-    const navChangeCat = document.getElementById('nav-change-cat');
+    const navKategorieSelect = document.getElementById('nav-kategorie-select');
+    const navSelectWrapper = document.getElementById('nav-select-wrapper');
 
-    // --- FUNCTIONAL NAVIGATION LOGIC ---
-    function openMenu() { 
-        sideNav.classList.add('open'); 
-    }
-    function closeMenu() { 
-        sideNav.classList.remove('open'); 
-    }
+    // --- NAVIGATION OVERLAY LOGIK ---
+    function openMenu() { sideNav.classList.add('open'); }
+    function closeMenu() { sideNav.classList.remove('open'); }
 
     if (menuToggle) menuToggle.addEventListener('click', openMenu);
     if (navClose) navClose.addEventListener('click', closeMenu);
@@ -105,30 +101,30 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if (navRestart) {
-        navRestart.addEventListener('click', (e) => {
-            e.preventDefault();
+    // Dropdown-Interaktion im Menü
+    if (navKategorieSelect) {
+        navKategorieSelect.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navSelectWrapper.classList.toggle('open');
+        });
+
+        navKategorieSelect.addEventListener('change', () => {
+            navSelectWrapper.classList.remove('open');
+            // Synchronisiert Startseiten-Dropdown mit dem Navigations-Dropdown
+            kategorieSelect.value = navKategorieSelect.value;
             closeMenu();
             spielInitialisieren();
         });
     }
 
-    if (navChangeCat) {
-        navChangeCat.addEventListener('click', (e) => {
-            e.preventDefault();
-            closeMenu();
-            goBackToStart();
-        });
-    }
-
     function goBackToStart() {
+        container.classList.remove('game-active');
         gameScreen.classList.add('hidden');
         startScreen.classList.remove('hidden');
-        headerLogo.style.display = 'block';
         mainHeading.textContent = "Dein Pinoy Vokabeltrainer";
     }
 
-    // --- SELECTION OPEN/CLOSE PFEIL ---
+    // --- SELECTION CONTROL STARTSEITE ---
     if (kategorieSelect) {
         kategorieSelect.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -137,10 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         document.addEventListener('click', () => {
             selectWrapper.classList.remove('open');
-        });
-        
-        kategorieSelect.addEventListener('change', () => {
-            selectWrapper.classList.remove('open');
+            if(navSelectWrapper) navSelectWrapper.classList.remove('open');
         });
     }
 
@@ -150,14 +143,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- GAME ENGINE ---
+    // --- SPIEL-LOGIK ---
     function spielInitialisieren() {
         const gewaehlteKategorie = kategorieSelect.value;
         const textKategorie = kategorieSelect.options[kategorieSelect.selectedIndex].text;
         
-        // FIX: Überschrift ändert sich fehlerfrei zu KAPITEL: [AUSGEWÄHLTE KATEGORIE]
+        // Synchronisiert die Werte beider Selektoren im Hintergrund
+        navKategorieSelect.value = gewaehlteKategorie;
+        
+        // Fügt dem Container eine Klasse hinzu, um CSS-Anpassungen (z.B. kleinere H1) zu triggern
+        container.classList.add('game-active');
         mainHeading.textContent = `Kapitel: ${textKategorie}`;
-        headerLogo.style.display = 'none'; // Blendet Logo im Test aus, um Platz zu sparen
 
         startScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
