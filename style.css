@@ -1,5 +1,5 @@
-/* Grunddesign & Globale Schriftarten-Garantie */
-body, p, span, button, select, option, strong, h2, label, div {
+/* Grunddesign & Globale Schriftarten-Garantie (Montserrat) */
+body, p, span, button, select, option, strong, h2, label, div, a {
     font-family: 'Montserrat', sans-serif !important;
 }
 
@@ -15,7 +15,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Container */
+/* Haupt-Container */
 .trainer-container {
     background-color: #ffffff;
     padding: 35px;
@@ -25,21 +25,57 @@ body {
     max-width: 480px;
     text-align: center;
     border: 3px solid #53768A;
-    transition: all 0.3s ease;
+    position: relative; /* Wichtig für das absolute Menü */
+    overflow: hidden;
 }
 
 .hidden {
     display: none !important;
+}
+.screen-content {
+    width: 100%;
+}
+
+/* HEADER MIT HAMBURGER-MENÜ NAVIGATION */
+.header-nav-wrapper {
+    position: relative;
+    margin-bottom: 25px;
+    padding-top: 10px;
+}
+
+.hamburger-menu {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    padding: 0;
+    z-index: 10;
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #53768A;
+    border-radius: 2px;
+    transition: all 0.25s ease;
 }
 
 /* Logo und Überschrift */
 .logo-header-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
+    gap: 12px;
     text-align: left;
-    margin-bottom: 25px;
+    padding-left: 42px; /* Schafft links Platz für das Hamburger-Icon */
 }
 
 .unified-header {
@@ -48,42 +84,112 @@ body {
     padding-bottom: 15px;
 }
 
-.cafe-logo {
-    width: 70px; 
-    height: auto;
-    flex-shrink: 0;
-}
-
 .cafe-logo-small {
-    width: 50px;
+    width: 45px;
     height: auto;
     flex-shrink: 0;
 }
 
 h1 {
-    font-family: 'Cherry Bomb One', cursive !important; /* Bewusst für das Logo */
+    font-family: 'Cherry Bomb One', cursive !important;
     color: #B55219; 
-    font-size: 24px; 
+    font-size: 22px; 
     margin: 0;
     line-height: 1.2;
+    text-transform: uppercase; /* Unterstützt das Kapitel-Design perfekt */
 }
 
-/* Willkommensbox */
+/* NAVIGATION OVERLAY DESIGN */
+.nav-overlay {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(83, 118, 138, 0.98); /* Edles Petrol-Transparent */
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-overlay.open {
+    left: 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 38px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    text-align: center;
+}
+
+.nav-links a {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #F0DEC6;
+}
+
+/* WILLKOMMENSBOX: KAMI UNTER SPRECHBLASE (image_37a31d.png) */
 .welcome-box {
-    margin: 25px 0;
+    margin: 15px 0 25px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .kami-welcome-img {
     width: 130px;
     height: auto;
+    order: 2; /* Setzt Kami unter die Sprechblase */
     animation: floating 3s ease-in-out infinite;
 }
 
-/* Duolingo Sprechblase */
+.speech-bubble.bubble-top {
+    order: 1; /* Setzt Sprechblase nach oben */
+    position: relative;
+    background: #53768A; 
+    color: white;
+    border-radius: 16px;
+    padding: 18px 22px;
+}
+
+/* Pfeil nach unten gerichtet zu Kami */
+.speech-bubble.bubble-top:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px 0 10px;
+    border-style: solid;
+    border-color: #53768A transparent transparent transparent;
+    display: block;
+    width: 0;
+}
+
+/* KAMI IM SPIEL (Nebeneinander - Unverändert) */
 .kami-frage-container {
     display: flex;
     align-items: center;
@@ -97,7 +203,7 @@ h1 {
     height: auto;
 }
 
-.speech-bubble {
+.kami-frage-container .speech-bubble {
     position: relative;
     background: #B55219; 
     color: white;
@@ -106,7 +212,7 @@ h1 {
     flex-grow: 1;
 }
 
-.speech-bubble:after {
+.kami-frage-container .speech-bubble:after {
     content: '';
     position: absolute;
     left: -10px;
@@ -117,17 +223,6 @@ h1 {
     border-color: transparent #B55219 transparent transparent;
     display: block;
     width: 0;
-}
-
-.welcome-bubble {
-    background: #53768A; 
-}
-.welcome-bubble:after {
-    border-color: transparent transparent #53768A transparent;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 0 10px 10px 10px;
 }
 
 .bubble-caption {
@@ -144,15 +239,15 @@ h1 {
     font-weight: 700;
 }
 
-/* Dropdown Menü (2px Rahmen) */
-.section {
-    margin-bottom: 20px;
+/* KATEGORIEAUSWAHL AUF STARTSEITE */
+.category-start-section {
+    margin-bottom: 25px;
     text-align: left;
 }
 
 label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
@@ -176,8 +271,6 @@ select {
     background-color: #ffffff;
     outline: none;
     appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     cursor: pointer;
     text-align: left; 
     text-align-last: left; 
@@ -192,7 +285,7 @@ select {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
 }
 
-/* Fortschritts-Bereich (Unverändert linksbündig) */
+/* FORTSCHRITTS-BALKEN */
 .fortschritt-block {
     margin-bottom: 20px;
     text-align: left;
@@ -211,7 +304,6 @@ select {
     background-color: #F0DEC6;
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 0px; /* Reduziert, damit kein Platzhalter entsteht */
 }
 
 .progress-bar-fill {
@@ -221,12 +313,12 @@ select {
     transition: width 0.3s ease;
 }
 
-/* NEU: Optimierter Streak-Container ohne fixe Höhe */
+/* STREAK-CONTAINER (DYNAMISCH) */
 .streak-center-container {
-    display: none; /* Komplett unsichtbar im Normalzustand -> verhindert Lücken! */
+    display: none; 
     justify-content: center;
     width: 100%;
-    margin-top: 14px; /* Schafft nur Platz, wenn es aktiv angezeigt wird */
+    margin-top: 14px; 
 }
 
 .streak-badge {
@@ -242,7 +334,7 @@ select {
     animation: pulseStreak 1.5s infinite alternate;
 }
 
-/* Antwort-Buttons (2px Kontur) */
+/* ANTWORT-BUTTONS (2px KONTUR) */
 .antwort-box {
     display: grid;
     grid-template-columns: 1fr;
@@ -269,7 +361,6 @@ select {
     color: #B55219;
 }
 
-/* Farbliche Vollausfüllung + passende Konturen nach der Auswahl */
 .antwort-btn.richtig-vollflaechig {
     background-color: #E8F5E9 !important; 
     border-color: #2E7D32 !important;     
@@ -282,7 +373,7 @@ select {
     color: #C62828 !important;
 }
 
-/* Feedback-Box */
+/* FEEDBACK textbasiert */
 .feedback-box {
     min-height: 35px;
     margin-bottom: 15px;
@@ -293,20 +384,14 @@ select {
     justify-content: center;
     gap: 10px;
     padding: 5px 0;
-    box-sizing: border-box;
     background: transparent !important;
     border: none !important;
 }
 
-.feedback-box.richtig-text {
-    color: #2E7D32 !important;
-}
+.feedback-box.richtig-text { color: #2E7D32 !important; }
+.feedback-box.falsch-text { color: #C62828 !important; }
 
-.feedback-box.falsch-text {
-    color: #C62828 !important;
-}
-
-/* Haupt-Aktionsbutton */
+/* PRIMARY ACTION-BUTTON */
 .primary-btn {
     width: 100%;
     background-color: #B55219;
@@ -324,21 +409,15 @@ select {
     gap: 10px;
 }
 
-.primary-btn:hover {
-    background-color: #8D2B13;
-}
+.primary-btn:hover { background-color: #8D2B13; }
 
 .white-arrow {
     width: 24px;
     height: 24px;
-    display: inline-block;
-    vertical-align: middle;
     transition: transform 0.2s;
 }
 
-.primary-btn:hover .white-arrow {
-    transform: translateX(5px); 
-}
+.primary-btn:hover .white-arrow { transform: translateX(5px); }
 
 @keyframes floating {
     0% { transform: translateY(0px); }
