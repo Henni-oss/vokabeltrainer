@@ -11,81 +11,111 @@
 </head>
 <body>
 
-    <div id="start-screen" class="trainer-container">
-        <div class="logo-header-row">
-            <img src="logo.png" alt="Pinoy Café Logo" class="cafe-logo">
-            <h1>Dein Pinoy Vokabeltrainer</h1>
-        </div>
+    <!-- CONTAINER -->
+    <div class="trainer-container">
         
-        <div class="welcome-box">
-            <img src="kami_mango.png" alt="Kami die Mango" class="kami-welcome-img">
-            <div class="speech-bubble welcome-bubble">
-                <p><strong>Mabuhay! Ich bin Kami! 🥭</strong></p>
-                <p>Lass uns gemeinsam auf die Reise gehen und eine neue Sprache lernen. Bist du bereit?</p>
-            </div>
-        </div>
-
-        <button id="start-btn" class="primary-btn">Reise starten! 🚀</button>
-    </div>
-
-    <div id="game-screen" class="trainer-container hidden">
-        <div class="logo-header-row unified-header">
-            <img src="logo.png" alt="Pinoy Café Logo" class="cafe-logo-small">
-            <h1>Dein Pinoy Vokabeltrainer</h1>
-        </div>
-
-        <div class="section">
-            <label for="kategorie-select">Kategorie wählen</label>
-            <div class="select-wrapper" id="select-wrapper">
-                <select id="kategorie-select">
-                    <option value="alle">Alle Wörter</option>
-                    <option value="Farben">Farben</option>
-                    <option value="Tiere">Tiere</option>
-                    <option value="Essen">Essen & Gerichte</option>
-                    <option value="Begrüßungen">Begrüßungen</option>
-                    <option value="Zahlen">Zahlen</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="fortschritt-block">
-            <div class="fortschritt-info">
-                Vokabel: <strong id="aktuelle-frage">1</strong> von <strong id="gesamte-fragen">10</strong>
-            </div>
-            <div class="progress-bar-container">
-                <div id="progress-bar" class="progress-bar-fill"></div>
-            </div>
+        <!-- HEADERBEREICH MIT HAMBURGER MENÜ -->
+        <div class="header-nav-wrapper">
+            <!-- Drei-Strich-Menü oben links -->
+            <button id="menu-toggle" class="hamburger-menu" aria-label="Menü öffnen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             
-            <div id="streak-container" class="streak-center-container">
-                <div class="streak-badge">
-                    <span id="streak-text">0x richtig! 🔥</span>
+            <div class="logo-header-row unified-header">
+                <img src="logo.png" alt="Pinoy Café Logo" class="cafe-logo-small" id="header-logo">
+                <h1 id="main-heading">Dein Pinoy Vokabeltrainer</h1>
+            </div>
+        </div>
+
+        <!-- OVERLAY NAVIGATION -->
+        <div id="side-nav" class="nav-overlay">
+            <button id="nav-close" class="close-btn">&times;</button>
+            <div class="nav-links">
+                <a href="#" id="nav-home">Home</a>
+                <a href="#" id="nav-restart">Test wiederholen</a>
+                <a href="#" id="nav-change-cat">Kategorie wechseln</a>
+            </div>
+        </div>
+
+        <!-- 1. STARTSEITE -->
+        <div id="start-screen" class="screen-content">
+            <!-- Sprechblase OBEN (mit Pfeil nach unten) -->
+            <div class="welcome-box">
+                <div class="speech-bubble welcome-bubble bubble-top">
+                    <p><strong>Mabuhay! Ich bin Kami! 🥭</strong></p>
+                    <p>Lass uns gemeinsam auf die Reise gehen und eine neue Sprache lernen. Bist du bereit?</p>
+                </div>
+                <!-- Kami UNTER der Sprechblase -->
+                <img src="kami_mango.png" alt="Kami die Mango" class="kami-welcome-img">
+            </div>
+
+            <!-- Themenauswahl (Jetzt exklusiv hier auf der Startseite) -->
+            <div class="section category-start-section">
+                <label for="kategorie-select">Kategorie wählen</label>
+                <div class="select-wrapper" id="select-wrapper">
+                    <select id="kategorie-select">
+                        <option value="alle">Alle Wörter</option>
+                        <option value="Farben">Farben</option>
+                        <option value="Tiere">Tiere</option>
+                        <option value="Essen">Essen & Gerichte</option>
+                        <option value="Begrüßungen">Begrüßungen</option>
+                        <option value="Zahlen">Zahlen</option>
+                    </select>
                 </div>
             </div>
+
+            <button id="start-btn" class="primary-btn">Reise starten! 🚀</button>
         </div>
 
-        <div class="kami-frage-container">
-            <img src="kami_mango.png" alt="Kami" class="kami-avatar">
-            <div class="speech-bubble">
-                <p class="bubble-caption">Was bedeutet das Wort?</p>
-                <h2 id="gesuchtes-wort">---</h2>
+        <!-- 2. HAUPT-TRAINER AREA (Kategorie-Dropdown komplett entfernt) -->
+        <div id="game-screen" class="screen-content hidden">
+            <!-- Fortschritt & Dynamischer Streak-Block -->
+            <div class="fortschritt-block">
+                <div class="fortschritt-info">
+                    Vokabel: <strong id="aktuelle-frage">1</strong> von <strong id="gesamte-fragen">10</strong>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar-fill"></div>
+                </div>
+                
+                <div id="streak-container" class="streak-center-container">
+                    <div class="streak-badge">
+                        <span id="streak-text">0x richtig! 🔥</span>
+                    </div>
+                </div>
             </div>
+
+            <!-- Fragebereich mit Kami -->
+            <div class="kami-frage-container">
+                <img src="kami_mango.png" alt="Kami" class="kami-avatar">
+                <div class="speech-bubble">
+                    <p class="bubble-caption">Was bedeutet das Wort?</p>
+                    <h2 id="gesuchtes-wort">---</h2>
+                </div>
+            </div>
+
+            <!-- Antworten -->
+            <div class="antwort-box">
+                <button class="antwort-btn">---</button>
+                <button class="antwort-btn">---</button>
+                <button class="antwort-btn">---</button>
+                <button class="antwort-btn">---</button>
+            </div>
+
+            <!-- Feedback -->
+            <div id="feedback" class="feedback-box"></div>
+
+            <!-- Weiter-Button -->
+            <button id="weiter-btn" class="primary-btn">
+                <span>Nächste Frage</span>
+                <svg class="white-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
 
-        <div class="antwort-box">
-            <button class="antwort-btn">---</button>
-            <button class="antwort-btn">---</button>
-            <button class="antwort-btn">---</button>
-            <button class="antwort-btn">---</button>
-        </div>
-
-        <div id="feedback" class="feedback-box"></div>
-
-        <button id="weiter-btn" class="primary-btn">
-            <span>Nächste Frage</span>
-            <svg class="white-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
     </div>
 
     <script src="app.js"></script>
