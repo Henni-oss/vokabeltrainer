@@ -58,9 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let richtigesWort = null;
     let streakZaehler = 0;
 
+    // DOM-Elemente
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const startBtn = document.getElementById('start-btn');
+    const mainHeading = document.getElementById('main-heading');
+    const headerLogo = document.getElementById('header-logo');
 
     const wortAnzeige = document.getElementById('gesuchtes-wort');
     const antwortButtons = document.querySelectorAll('.antwort-btn');
@@ -72,9 +75,58 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const kategorieSelect = document.getElementById('kategorie-select');
     const selectWrapper = document.getElementById('select-wrapper');
-    const streakContainer = document.getElementById('streak-container'); // Container geändert
+    const streakContainer = document.getElementById('streak-container');
     const streakText = document.getElementById('streak-text');
 
+    // Menü-Elemente
+    const menuToggle = document.getElementById('menu-toggle');
+    const sideNav = document.getElementById('side-nav');
+    const navClose = document.getElementById('nav-close');
+    const navHome = document.getElementById('nav-home');
+    const navRestart = document.getElementById('nav-restart');
+    const navChangeCat = document.getElementById('nav-change-cat');
+
+    // --- NAVIGATION LOGIK ---
+    function openMenu() { sideNav.classList.add('open'); }
+    function closeMenu() { sideNav.classList.remove('open'); }
+
+    if (menuToggle) menuToggle.addEventListener('click', openMenu);
+    if (navClose) navClose.addEventListener('click', closeMenu);
+
+    if (navHome) {
+        navHome.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeMenu();
+            goBackToStart();
+        });
+    }
+
+    if (navRestart) {
+        navRestart.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeMenu();
+            if (!gameScreen.classList.contains('hidden')) {
+                spielInitialisieren();
+            }
+        });
+    }
+
+    if (navChangeCat) {
+        navChangeCat.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeMenu();
+            goBackToStart();
+        });
+    }
+
+    function goBackToStart() {
+        gameScreen.classList.add('hidden');
+        startScreen.classList.remove('hidden');
+        headerLogo.style.display = 'block';
+        mainHeading.textContent = "Dein Pinoy Vokabeltrainer";
+    }
+
+    // --- SELECTION PFEIL STEUERUNG ---
     if (kategorieSelect) {
         kategorieSelect.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -82,12 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         document.addEventListener('click', () => {
-            selectWrapper.classList.remove('open');
-        });
-
-        kategorieSelect.addEventListener('change', () => {
-            selectWrapper.classList.remove('open');
-            spielInitialisieren();
+            selectWrapper.classList.remove('remove');
         });
     }
 
@@ -99,19 +146,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- GAME ENGINE ---
     function spielInitialisieren() {
         const gewaehlteKategorie = kategorieSelect.value;
+        const textKategorie = kategorieSelect.options[kategorieSelect.selectedIndex].text;
+        
+        // FIX: H1 ändert sich dynamisch zu KAPITEL ...
+        mainHeading.textContent = `Kapitel: ${textKategorie}`;
+        headerLogo.style.display = 'none'; // Blendet Logo aus, um Platz zu sparen
+
         if (gewaehlteKategorie === "alle") {
             aktuelleRunde = [...alleVokabeln];
         } else {
             aktuelleRunde = alleVokabeln.filter(v => v.kategorie === gewaehlteKategorie);
         }
+        
         aktuelleRunde.sort(() => Math.random() - 0.5);
         if (aktuelleRunde.length > 10) aktuelleRunde = aktuelleRunde.slice(0, 10);
 
         index = 0;
         streakZaehler = 0;
-        streakContainer.style.display = 'none'; // Verhindert Platzhalter am Start
+        streakContainer.style.display = 'none'; 
         gesamteFragenAnzeige.textContent = aktuelleRunde.length;
         frageLaden();
     }
@@ -160,19 +215,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
             geklickterButton.classList.add('richtig-vollflaechig');
             
-            // Streak hochzählen, Text setzen und Container einblenden (schafft dynamisch Platz)
             streakZaehler++;
             streakText.textContent = `${streakZaehler}x richtig! 🔥`;
-            streakContainer.style.display = 'flex';
+            streakContainer.style.display = 'flex'; // Schafft dynamisch Platz
 
             feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
             feedbackAnzeige.className = "feedback-box richtig-text";
         } else {
             geklickterButton.classList.add('falsch-vollflaechig');
             
-            // Streak verloren -> Container sofort komplett ausblenden (schließt die Lücke wieder)
             streakZaehler = 0;
-            streakContainer.style.display = 'none';
+            streakContainer.style.display = 'none'; // Schließt Lücke bei Niederlage sofort wieder
 
             feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
             feedbackAnzeige.className = "feedback-box falsch-text";
