@@ -18,7 +18,7 @@ body {
 /* Haupt-Container */
 .trainer-container {
     background-color: #ffffff;
-    /* Nur oben auf 8px reduziert, Seiten (35px) und unten (35px) bleiben unverändert! */
+    /* Zieht den Header auf ALLEN Seiten auf 8px nah an die obere Kontur, Seiten bleiben bei 35px */
     padding: 8px 35px 35px 35px !important; 
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(141, 43, 19, 0.12);
@@ -41,7 +41,30 @@ body {
 .header-nav-wrapper {
     position: relative;
     margin-bottom: 25px;
-    padding-top: 10px;
+    padding-top: 0px !important;    /* Killt jegliches Padding im Wrapper für maximale Höhe */
+    margin-top: 0px !important;     /* Zwingt Logo, H1 und Menü ganz nach oben */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Verhindert, dass die Einzelelemente eigene Abstände nach oben erzeugen */
+#header-logo, 
+.logo-header-row img {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+}
+
+h1, 
+#main-heading {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+}
+
+#menu-toggle, 
+.hamburger-menu {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
 }
 
 .logo-header-row {
@@ -62,7 +85,7 @@ body {
     width: 45px;
     height: auto;
     flex-shrink: 0;
-    display: block !important; /* Bleibt dauerhaft sichtbar */
+    display: block !important;
 }
 
 h1 {
@@ -72,10 +95,10 @@ h1 {
     margin: 0;
     line-height: 1.2;
     text-transform: uppercase;
-    transition: font-size 0.2s ease;
+    transition: none; /* Verhindert unruhiges Springen beim Klicken */
 }
 
-/* Verkleinert die H1 im Spiel-Modus leicht, damit Logo + Kapitelname perfekt nebeneinander passen */
+/* Bleibt im Spiel-Modus exakt genauso groß wie auf der Startseite */
 .game-active h1 {
     font-size: 22px;
 }
@@ -107,10 +130,9 @@ h1 {
 }
 
 /* **************************************************
-   REPARATUR-BLOCK: NAVIGATION OVERLAY & DROP-DOWNS
+   NAVIGATION OVERLAY & DROP-DOWNS
    ************************************************** */
 
-/* * NAVIGATION OVERLAY DESIGN */
 .nav-overlay {
     position: absolute;
     top: 0;
@@ -154,17 +176,6 @@ h1 {
     cursor: pointer;
     line-height: 1;
 }
-.close-btn {
-    position: absolute;
-    top: 25px;
-    right: 25px; 
-    font-size: 38px;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    line-height: 1;
-}
 
 .nav-links {
     display: flex;
@@ -184,7 +195,6 @@ h1 {
     gap: 12px;
 }
 
-/* Hover-Effekt: Text bleibt weiß, kriegt Unterstreichung */
 .nav-links a:hover span {
     text-decoration: underline;
     text-decoration-thickness: 2px;
@@ -213,20 +223,9 @@ h1 {
     gap: 12px;
 }
 
-/* Weißes Dropdown fürs Menü */
-.white-select select {
-    border-color: #ffffff !important;
-    color: #53768A !important;
-    background-color: #ffffff !important;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") !important;
-}
-.white-select.open select {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>") !important;
-}
-
-/* WILLKOMMENSBOX */
+/* WILLKOMMENSBOX (STARTSEITE) */
 .welcome-box {
-    margin: 15px 0 25px 0;
+    margin: 10px 0 25px 0 !important; /* Knackiger, kleinerer Abstand nach oben zur Linie */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -262,7 +261,7 @@ h1 {
     width: 0;
 }
 
-/* TEST MODUS */
+/* TEST MODUS (VOKABELTRAINER) */
 .kami-frage-container {
     display: flex;
     align-items: center;
@@ -358,14 +357,9 @@ select {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
 }
 
-/* FORTSCHRITTS-BALKEN & STRYSYMMETRISCHER STREAK */
+/* FORTSCHRITTS-BALKEN & SYMMETRISCHER STREAK */
 .fortschritt-block {
-    margin-bottom: 20px;
-    text-align: left;
-}
-/* FORTSCHRITTS-BALKEN & STRYSYMMETRISCHER STREAK */
-.fortschritt-block {
-    margin-bottom: 10px; /* FIX: Von 20px auf 10px verkürzt, um den großen Abstand zu killen! */
+    margin-bottom: 4px; /* Perfekt minimierter Abstand */
     text-align: left;
 }
 
@@ -396,9 +390,10 @@ select {
     display: none; 
     justify-content: center;
     width: 100%;
-    margin-top: 10px !important;    /* Erzwingt den kleinen Abstand nach oben */
-    margin-bottom: 10px !important; /* Erzwingt den identischen, kleinen Abstand nach unten! */
+    margin-top: 4px !important;    /* Knackige 4px Abstand nach oben */
+    margin-bottom: 4px !important; /* Knackige 4px Abstand nach unten */
 }
+
 .streak-badge {
     background-color: #FFF0E6;
     border: 2px solid #FF8833;
