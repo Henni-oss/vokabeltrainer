@@ -18,7 +18,7 @@ body {
 /* Haupt-Container */
 .trainer-container {
     background-color: #ffffff;
-    padding: 35px;
+    padding: 15px 35px 35px 35px; /* FIX: Oberes Padding von 35px auf 15px reduziert */
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(141, 43, 19, 0.12);
     width: 100%;
@@ -27,6 +27,13 @@ body {
     border: 3px solid #53768A;
     position: relative; 
     overflow: hidden;
+}
+
+/* HEADER NAVIGATION */
+.header-nav-wrapper {
+    position: relative;
+    margin-bottom: 25px;
+    padding-top: 0px; /* FIX: Von 10px auf 0px gesetzt, um den roten Kasten komplett zu verkleinern */
 }
 
 .hidden {
