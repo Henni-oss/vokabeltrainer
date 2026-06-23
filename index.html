@@ -29,9 +29,27 @@
         <div id="side-nav" class="nav-overlay">
             <button id="nav-close" class="close-btn">&times;</button>
             <div class="nav-links">
-                <a href="#" id="nav-home">Home</a>
-                <a href="#" id="nav-restart">Test wiederholen</a>
-                <a href="#" id="nav-change-cat">Kategorie wechseln</a>
+                <a href="#" id="nav-home">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                </a>
+                
+                <div class="nav-category-wrapper">
+                    <div class="nav-static-item">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        <span>Kategorie wechseln:</span>
+                    </div>
+                    <div class="select-wrapper white-select" id="nav-select-wrapper">
+                        <select id="nav-kategorie-select">
+                            <option value="alle">Alle Wörter</option>
+                            <option value="Farben">Farben</option>
+                            <option value="Tiere">Tiere</option>
+                            <option value="Essen">Essen & Gerichte</option>
+                            <option value="Begrüßungen">Begrüßungen</option>
+                            <option value="Zahlen">Zahlen</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
 
