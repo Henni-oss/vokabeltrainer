@@ -105,14 +105,18 @@ h1 {
     transition: all 0.25s ease;
 }
 
-/* NAVIGATION OVERLAY DESIGN */
+/* **************************************************
+   REPARATUR-BLOCK: NAVIGATION OVERLAY & DROP-DOWNS
+   ************************************************** */
+
+/* * NAVIGATION OVERLAY DESIGN */
 .nav-overlay {
     position: absolute;
     top: 0;
-    left: 100%; 
+    left: 100%;
     width: 100%;
     height: 100%;
-    background-color: rgba(83, 118, 138, 0.98); 
+    background-color: rgba(83, 118, 138, 0.98);
     z-index: 100;
     display: flex;
     flex-direction: column;
@@ -122,13 +126,10 @@ h1 {
 }
 
 .nav-overlay.open {
-    left: 0; 
-}
-.nav-overlay.open {
     left: 0;
 }
 
-/* Weißes Dropdown fürs Menü */
+/* Weißes Dropdown fürs Menü (Kategorien und Pfeile) */
 .white-select select {
     border-color: #ffffff !important;
     color: #53768A !important;
@@ -140,9 +141,18 @@ h1 {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>") !important;
 }
 
+/* Schließen-Button im Menü */
 .close-btn {
     position: absolute;
-...
+    top: 25px;
+    right: 25px;
+    font-size: 38px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    line-height: 1;
+}
 .close-btn {
     position: absolute;
     top: 25px;
