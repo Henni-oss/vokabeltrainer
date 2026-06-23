@@ -18,7 +18,7 @@ body {
 /* Haupt-Container */
 .trainer-container {
     background-color: #ffffff;
-    /* Reduziert den oberen Abstand einheitlich auf ein Minimum */
+    /* Knackiger oberer Abstand direkt an der Kontur */
     padding: 10px 35px 35px 35px !important; 
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(141, 43, 19, 0.12);
@@ -37,38 +37,30 @@ body {
     width: 100%;
 }
 
-/* HEADER NAVIGATION - KOMPLETTE REPARATUR */
+/* HEADER NAVIGATION - PERFEKTE HORIZONTALE MITTE & DURCHGEHENDE LINIE */
 .header-nav-wrapper {
-    position: relative;
-    margin-bottom: 25px;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-/* Diese Box beinhaltet ALLES (Logo, H1 UND Menü) und zieht die durchgehende Linie */
-.logo-header-row {
     display: flex !important;
-    align-items: center !important;         /* Richtet Logo, H1 und Menü perfekt mittig zueinander aus */
-    justify-content: space-between !important; /* Setzt das Menü ganz nach rechts, Logo+H1 nach links */
+    align-items: center !important;         /* Zentriert Logo-Bereich und Menü-Button perfekt vertikal */
+    justify-content: space-between !important; /* Schiebt Logo/H1 nach links, Menü nach ganz rechts */
     width: 100% !important;
-    border-bottom: 2px solid #F0DEC6 !important; /* Die gewünschte durchgehende Linie */
+    border-bottom: 2px solid #F0DEC6 !important; /* Die ununterbrochene Trennlinie */
     padding-bottom: 12px !important;
     margin-bottom: 25px !important;
-    padding-right: 0 !important;            /* Entfernt alte Blockaden */
-    gap: 12px;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
 }
 
-/* Falls im HTML eine zusätzliche "unified-header" Klasse liegt, wird sie hier neutralisiert */
-.unified-header {
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+/* Container für Logo + Text */
+.logo-header-row {
     display: flex !important;
-    align-items: center !important;
-    gap: 12px;
+    align-items: center !important;         /* Zentriert Logo und Text zueinander auf der Mittellinie */
+    gap: 12px !important;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-/* Verhindert, dass Einzelelemente eigene Abstände nach oben erzeugen */
+/* Setzt alle alten Stör-Abstände der inneren Elemente zurück */
 #header-logo, 
 .logo-header-row img,
 h1, 
@@ -96,9 +88,9 @@ h1 {
     font-size: 22px;
 }
 
-/* Das Hamburger Menü verliert seine absolute Positionierung und reiht sich perfekt ein */
+/* Das Hamburger Menü verhält sich jetzt wie ein normales Element auf der Mittellinie */
 .hamburger-menu {
-    position: relative !important;   /* Hebt das störende absolute Layout auf */
+    position: relative !important;   /* Beendet das störende absolute Layout aus vorherigen Versionen */
     top: auto !important;
     right: auto !important;
     transform: none !important;
