@@ -362,6 +362,11 @@ select {
     margin-bottom: 20px;
     text-align: left;
 }
+/* FORTSCHRITTS-BALKEN & STRYSYMMETRISCHER STREAK */
+.fortschritt-block {
+    margin-bottom: 10px; /* FIX: Von 20px auf 10px verkürzt, um den großen Abstand zu killen! */
+    text-align: left;
+}
 
 .fortschritt-info {
     font-size: 13px;
@@ -390,10 +395,9 @@ select {
     display: none; 
     justify-content: center;
     width: 100%;
-    margin-top: 10px;     /* Abstand vom Balken nach unten zum Streak */
-    margin-bottom: 5px;  /* FIX: Identischer Abstand vom Streak nach unten zum Kami-Bereich! */
+    margin-top: 10px !important;    /* Erzwingt den kleinen Abstand nach oben */
+    margin-bottom: 10px !important; /* Erzwingt den identischen, kleinen Abstand nach unten! */
 }
-
 .streak-badge {
     background-color: #FFF0E6;
     border: 2px solid #FF8833;
