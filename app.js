@@ -86,9 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const navRestart = document.getElementById('nav-restart');
     const navChangeCat = document.getElementById('nav-change-cat');
 
-    // --- NAVIGATION LOGIK ---
-    function openMenu() { sideNav.classList.add('open'); }
-    function closeMenu() { sideNav.classList.remove('open'); }
+    // --- FUNCTIONAL NAVIGATION LOGIC ---
+    function openMenu() { 
+        sideNav.classList.add('open'); 
+    }
+    function closeMenu() { 
+        sideNav.classList.remove('open'); 
+    }
 
     if (menuToggle) menuToggle.addEventListener('click', openMenu);
     if (navClose) navClose.addEventListener('click', closeMenu);
@@ -105,9 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         navRestart.addEventListener('click', (e) => {
             e.preventDefault();
             closeMenu();
-            if (!gameScreen.classList.contains('hidden')) {
-                spielInitialisieren();
-            }
+            spielInitialisieren();
         });
     }
 
@@ -126,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         mainHeading.textContent = "Dein Pinoy Vokabeltrainer";
     }
 
-    // --- SELECTION PFEIL STEUERUNG ---
+    // --- SELECTION OPEN/CLOSE PFEIL ---
     if (kategorieSelect) {
         kategorieSelect.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -134,14 +136,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         document.addEventListener('click', () => {
-            selectWrapper.classList.remove('remove');
+            selectWrapper.classList.remove('open');
+        });
+        
+        kategorieSelect.addEventListener('change', () => {
+            selectWrapper.classList.remove('open');
         });
     }
 
     if (startBtn) {
         startBtn.addEventListener('click', () => {
-            startScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
             spielInitialisieren();
         });
     }
@@ -151,9 +155,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const gewaehlteKategorie = kategorieSelect.value;
         const textKategorie = kategorieSelect.options[kategorieSelect.selectedIndex].text;
         
-        // FIX: H1 ändert sich dynamisch zu KAPITEL ...
+        // FIX: Überschrift ändert sich fehlerfrei zu KAPITEL: [AUSGEWÄHLTE KATEGORIE]
         mainHeading.textContent = `Kapitel: ${textKategorie}`;
-        headerLogo.style.display = 'none'; // Blendet Logo aus, um Platz zu sparen
+        headerLogo.style.display = 'none'; // Blendet Logo im Test aus, um Platz zu sparen
+
+        startScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
 
         if (gewaehlteKategorie === "alle") {
             aktuelleRunde = [...alleVokabeln];
@@ -217,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             streakZaehler++;
             streakText.textContent = `${streakZaehler}x richtig! 🔥`;
-            streakContainer.style.display = 'flex'; // Schafft dynamisch Platz
+            streakContainer.style.display = 'flex'; 
 
             feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
             feedbackAnzeige.className = "feedback-box richtig-text";
@@ -225,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
             geklickterButton.classList.add('falsch-vollflaechig');
             
             streakZaehler = 0;
-            streakContainer.style.display = 'none'; // Schließt Lücke bei Niederlage sofort wieder
+            streakContainer.style.display = 'none'; 
 
             feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
             feedbackAnzeige.className = "feedback-box falsch-text";
