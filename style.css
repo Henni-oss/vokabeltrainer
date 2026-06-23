@@ -390,8 +390,8 @@ select {
     display: none; 
     justify-content: center;
     width: 100%;
-    margin-top: 14px;     /* Abstand vom Balken nach unten zum Streak */
-    margin-bottom: 14px;  /* FIX: Identischer Abstand vom Streak nach unten zum Kami-Bereich! */
+    margin-top: 10px;     /* Abstand vom Balken nach unten zum Streak */
+    margin-bottom: 10px;  /* FIX: Identischer Abstand vom Streak nach unten zum Kami-Bereich! */
 }
 
 .streak-badge {
