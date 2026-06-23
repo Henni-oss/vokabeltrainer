@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vokabeltrainer</title>
+    <title>Dein Pinoy Vokabeltrainer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,9 +14,9 @@
     <div class="trainer-container">
         
         <div class="header-nav-wrapper">
-            <div class="logo-header-row">
-                <img src="logo.png" id="header-logo" class="cafe-logo-small" alt="Logo">
-                <h1 id="main-heading">DEIN PINOY VOKABELTRAINER</h1>
+            <div class="logo-header-row unified-header">
+                <img src="logo.png" alt="Pinoy Café Logo" class="cafe-logo-small" id="header-logo">
+                <h1 id="main-heading">Dein Pinoy Vokabeltrainer</h1>
             </div>
 
             <button id="menu-toggle" class="hamburger-menu" aria-label="Menü öffnen">
@@ -26,86 +26,97 @@
             </button>
         </div>
 
-        <div id="nav-overlay" class="nav-overlay">
-            <button id="close-btn" class="close-btn">&times;</button>
+        <div id="side-nav" class="nav-overlay">
+            <button id="nav-close" class="close-btn">&times;</button>
             <div class="nav-links">
-                <a href="#" id="link-home">
-                    <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <span>Startseite</span>
+                <a href="#" id="nav-home">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
                 </a>
                 
                 <div class="nav-category-wrapper">
                     <div class="nav-static-item">
-                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2z" />
-                        </svg>
-                        <span>Kategorie wechseln</span>
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        <span>Kategorie wechseln:</span>
                     </div>
-                    <div class="select-wrapper white-select" id="menu-category-dropdown-wrapper">
-                        <select id="menu-category-select">
-                            </select>
+                    <div class="select-wrapper white-select" id="nav-select-wrapper">
+                        <select id="nav-kategorie-select">
+                            <option value="alle">Alle Wörter</option>
+                            <option value="Farben">Farben</option>
+                            <option value="Tiere">Tiere</option>
+                            <option value="Essen">Essen & Gerichte</option>
+                            <option value="Begrüßungen">Begrüßungen</option>
+                            <option value="Zahlen">Zahlen</option>
+                        </select>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="start-screen" class="screen-content">
-            
-            <div class="speech-bubble">
-                <p style="margin: 0 0 8px 0; font-weight: 700; font-size: 18px;">Mabuhay! Ich bin Kami! 🥭</p>
-                <p style="margin: 0; font-weight: 400; font-size: 14px; line-height: 1.4;">Lass uns gemeinsam auf die Reise gehen und eine neue Sprache lernen. Bist du bereit?</p>
+            <div class="welcome-box">
+                <div class="speech-bubble welcome-bubble bubble-top">
+                    <p><strong>Mabuhay! Ich bin Kami! 🥭</strong></p>
+                    <p>Lass uns gemeinsam auf die Reise gehen und eine neue Sprache lernen. Bist du bereit?</p>
+                </div>
+                <img src="kami_mango.png" alt="Kami die Mango" class="kami-welcome-img">
             </div>
 
-            <div class="welcome-box" style="margin-top: 10px;">
-                <img src="kami_mango.png" class="kami-welcome-img" alt="Kami">
-            </div>
-
-            <div class="category-start-section">
-                <label for="main-category-select">Kategorie wählen</label>
-                <div class="select-wrapper" id="main-category-dropdown-wrapper">
-                    <select id="main-category-select">
-                        </select>
+            <div class="section category-start-section">
+                <label for="kategorie-select">Kategorie wählen</label>
+                <div class="select-wrapper" id="select-wrapper">
+                    <select id="kategorie-select">
+                        <option value="alle">Alle Wörter</option>
+                        <option value="Farben">Farben</option>
+                        <option value="Tiere">Tiere</option>
+                        <option value="Essen">Essen & Gerichte</option>
+                        <option value="Begrüßungen">Begrüßungen</option>
+                        <option value="Zahlen">Zahlen</option>
+                    </select>
                 </div>
             </div>
 
-            <button id="start-btn" class="primary-btn">
-                <span>Reise starten! 🚀</span>
-            </button>
+            <button id="start-btn" class="primary-btn">Reise starten! 🚀</button>
         </div>
 
         <div id="game-screen" class="screen-content hidden">
-            <div class="kami-frage-container">
-                <img src="kami_mango.png" class="kami-avatar" alt="Kami">
-                <div class="speech-bubble">
-                    <p class="bubble-caption">Was bedeutet das Wort?</p>
-                    <p id="gesuchtes-wort">Wort</p>
+            <div class="fortschritt-block">
+                <div class="fortschritt-info">
+                    Vokabel: <strong id="aktuelle-frage">1</strong> von <strong id="gesamte-fragen">10</strong>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar-fill"></div>
+                </div>
+                
+                <div id="streak-container" class="streak-center-container">
+                    <div class="streak-badge">
+                        <span id="streak-text">0x richtig! 🔥</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="antwort-box" id="antwort-container">
-                <button class="antwort-btn">Antwort 1</button>
-                <button class="antwort-btn">Antwort 2</button>
-                <button class="antwort-btn">Antwort 3</button>
-                <button class="antwort-btn">Antwort 4</button>
+            <div class="kami-frage-container">
+                <img src="kami_mango.png" alt="Kami" class="kami-avatar">
+                <div class="speech-bubble">
+                    <p class="bubble-caption">Was bedeutet das Wort?</p>
+                    <h2 id="gesuchtes-wort">---</h2>
+                </div>
+            </div>
+
+            <div class="antwort-box">
+                <button class="antwort-btn">---</button>
+                <button class="antwort-btn">---</button>
+                <button class="antwort-btn">---</button>
+                <button class="antwort-btn">---</button>
             </div>
 
             <div id="feedback" class="feedback-box"></div>
 
-            <div class="fortschritt-block">
-                <div class="fortschritt-info" id="progress-text">Vokabel: 0 von 0</div>
-                <div class="progress-bar-container">
-                    <div id="progress-bar" class="progress-bar-fill"></div>
-                </div>
-            </div>
-
-            <div id="streak-container" class="streak-center-container">
-                <span class="streak-badge" id="streak-text">🔥 0er Serie!</span>
-            </div>
-
-            <button id="next-btn" class="primary-btn hidden" style="margin-top: 15px;">
-                <span>Nächste Frage ➔</span>
+            <button id="weiter-btn" class="primary-btn">
+                <span>Nächste Frage</span>
+                <svg class="white-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </button>
         </div>
 
