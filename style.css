@@ -124,7 +124,25 @@ h1 {
 .nav-overlay.open {
     left: 0; 
 }
+.nav-overlay.open {
+    left: 0;
+}
 
+/* Weißes Dropdown fürs Menü */
+.white-select select {
+    border-color: #ffffff !important;
+    color: #53768A !important;
+    background-color: #ffffff !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") !important;
+}
+
+.white-select.open select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>") !important;
+}
+
+.close-btn {
+    position: absolute;
+...
 .close-btn {
     position: absolute;
     top: 25px;
