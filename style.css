@@ -76,7 +76,7 @@ h1 {
 
 /* Verkleinert die H1 im Spiel-Modus leicht, damit Logo + Kapitelname perfekt nebeneinander passen */
 .game-active h1 {
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .hamburger-menu {
