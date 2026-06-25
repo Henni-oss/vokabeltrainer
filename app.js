@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         weiterBtn.style.display = 'flex'; 
     }
 
-    // --- INTERAKTIVE ERGEBNIS-STEUERUNG ---
+   // --- INTERAKTIVE ERGEBNIS-STEUERUNG ---
     function zeigeTestergebnis() {
         gameScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
@@ -291,21 +291,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 resultSpeechContent.innerHTML = `
                     <p><strong>Wow, ich bin beeindruckt! 😮🎉</strong></p>
                     <p>Das lief richtig super! Hier ist deine Auswertung:</p>
-                    <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
-                    <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
-                    <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
-                    <p>&nbsp;</p>
+                    <p class="stat-line">✅ Richtig: <strong>${richtigZaehler}</strong></p>
+                    <p class="stat-line">❌ Falsch: <strong>${falschZaehler}</strong></p>
+                    <p class="stat-line">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
                 `;
             } else {
                 resultKamiImg.src = 'kami_fragend.png';
                 resultSpeechContent.innerHTML = `
                     <p><strong>Hm, lass uns mal schauen... 🤔💡</strong></p>
                     <p>Da waren ein paar knifflige Wörter dabei, oder? Macht gar nichts! Deine Statistik:</p>
-                    <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
-                    <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
-                    <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
-                    <p style="margin-top: 12px; font-weight:600;">Übung macht den Pinoy-Meister. Gleich nochmal probieren?</p>
-                    <p>&nbsp;</p>
+                    <p class="stat-line">✅ Richtig: <strong>${richtigZaehler}</strong></p>
+                    <p class="stat-line">❌ Falsch: <strong>${falschZaehler}</strong></p>
+                    <p class="stat-line">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
+                    <p class="final-motivation-line">Übung macht den Pinoy-Meister. Gleich nochmal probieren?</p>
                 `;
             }
         };
