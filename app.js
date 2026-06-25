@@ -196,8 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackAnzeige.textContent = "";
         feedbackAnzeige.className = "feedback-box";
         weiterBtn.style.display = 'none';
-        
-        // Standard-Text für normale Fragen laden
         weiterBtnText.textContent = "Nächste Frage";
         
         aktuelleFrageAnzeige.textContent = index + 1;
@@ -260,7 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // SOFORTIGE PRÜFUNG: Wenn wir bei der 10. Vokabel sind, tausche den Button-Text sofort aus!
         if (index === aktuelleRunde.length - 1) {
             weiterBtnText.textContent = "Test absenden";
         }
@@ -307,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
                     <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
                     <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
-                    <p style="font-size: 13px; margin-top: 8px; font-weight:600;">Übung macht den Pinoy-Meister. Gleich nochmal probieren?</p>
+                    <p style="margin-top: 12px; font-weight:600;">Übung macht den Pinoy-Meister. Gleich nochmal probieren?</p>
                     <p>&nbsp;</p>
                 `;
             }
