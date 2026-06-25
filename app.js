@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackAnzeige.className = "feedback-box";
         weiterBtn.style.display = 'none';
         
-        // Standardmäßig Button auf "Nächste Frage" setzen
+        // Standard-Text für normale Fragen laden
         weiterBtnText.textContent = "Nächste Frage";
         
         aktuelleFrageAnzeige.textContent = index + 1;
@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // NEU: Wenn es das letzte Wort der Runde (index 9 bei 10 Fragen) ist, ändere den Text auf "Test absenden"
+        // SOFORTIGE PRÜFUNG: Wenn wir bei der 10. Vokabel sind, tausche den Button-Text sofort aus!
         if (index === aktuelleRunde.length - 1) {
             weiterBtnText.textContent = "Test absenden";
         }
@@ -297,6 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
                     <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
                     <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
+                    <p>&nbsp;</p>
                 `;
             } else {
                 resultKamiImg.src = 'kami_fragend.png';
