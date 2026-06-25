@@ -1,325 +1,487 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* Grunddesign & Globale Schriftarten-Garantie (Montserrat) */
+body, p, span, button, select, option, strong, h2, label, div, a {
+    font-family: 'Montserrat', sans-serif !important;
+}
 
-    const alleVokabeln = [
-        { kategorie: "Farben", wort_deutsch: "Rot", wort_tagalog: "Pula" },
-        { kategorie: "Farben", wort_deutsch: "Blau", wort_tagalog: "Asul" },
-        { kategorie: "Farben", wort_deutsch: "Gelb", wort_tagalog: "Dilaw" },
-        { kategorie: "Farben", wort_deutsch: "Grün", wort_tagalog: "Berde" },
-        { kategorie: "Farben", wort_deutsch: "Schwarz", wort_tagalog: "Itim" },
-        { kategorie: "Farben", wort_deutsch: "Weiß", wort_tagalog: "Puti" },
-        { kategorie: "Farben", wort_deutsch: "Braun", wort_tagalog: "Kayumanggi" },
-        { kategorie: "Farben", wort_deutsch: "Rosa", wort_tagalog: "Rosas" },
-        { kategorie: "Farben", wort_deutsch: "Orange", wort_tagalog: "Nalandan" },
-        { kategorie: "Farben", wort_deutsch: "Grau", wort_tagalog: "Abuhin" },
-        { kategorie: "Tiere", wort_deutsch: "Hund", wort_tagalog: "Aso" },
-        { kategorie: "Tiere", wort_deutsch: "Katze", wort_tagalog: "Pusa" },
-        { kategorie: "Tiere", wort_deutsch: "Vogel", wort_tagalog: "Ibon" },
-        { kategorie: "Tiere", wort_deutsch: "Fisch", wort_tagalog: "Isda" },
-        { kategorie: "Tiere", wort_deutsch: "Schwein", wort_tagalog: "Baboy" },
-        { kategorie: "Tiere", wort_deutsch: "Huhn", wort_tagalog: "Manok" },
-        { kategorie: "Tiere", wort_deutsch: "Kuh", wort_tagalog: "Baka" },
-        { kategorie: "Tiere", wort_deutsch: "Pferd", wort_tagalog: "Kabayo" },
-        { kategorie: "Tiere", wort_deutsch: "Affe", wort_tagalog: "Unggoy" },
-        { kategorie: "Tiere", wort_deutsch: "Maus", wort_tagalog: "Daga" },
-        { kategorie: "Essen", wort_deutsch: "Reis", wort_tagalog: "Kanin" },
-        { kategorie: "Essen", wort_deutsch: "Fleisch", wort_tagalog: "Karne" },
-        { kategorie: "Essen", wort_deutsch: "Gemüse", wort_tagalog: "Gulay" },
-        { kategorie: "Essen", wort_deutsch: "Obst", wort_tagalog: "Prutas" },
-        { kategorie: "Essen", wort_deutsch: "Brot", wort_tagalog: "Tinapay" },
-        { kategorie: "Essen", wort_deutsch: "Ei", wort_tagalog: "Itlog" },
-        { kategorie: "Essen", wort_deutsch: "Fisch (Speise)", wort_tagalog: "Ulam" },
-        { kategorie: "Essen", wort_deutsch: "Wasser", wort_tagalog: "Tubig" },
-        { kategorie: "Essen", wort_deutsch: "Milch", wort_tagalog: "Gatas" },
-        { kategorie: "Essen", wort_deutsch: "Suppe", wort_tagalog: "Sabaw" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Hallo / Guten Tag", wort_tagalog: "Kamusta" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Guten Morgen", wort_tagalog: "Magandang umaga" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Guten Abend", wort_tagalog: "Magandang gabi" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Danke", wort_tagalog: "Salamat" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Vielen Dank", wort_tagalog: "Maraming salamat" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Bitte / Gern geschehen", wort_tagalog: "Walang anuman" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Wie geht es dir?", wort_tagalog: "Kamusta ka?" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Gut", wort_tagalog: "Mabuti" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Auf Wiedersehen", wort_tagalog: "Paalam" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Tschüss (informell)", wort_tagalog: "Sige na" },
-        { kategorie: "Zahlen", wort_deutsch: "Eins", wort_tagalog: "Isa" },
-        { kategorie: "Zahlen", wort_deutsch: "Zwei", wort_tagalog: "Dalawa" },
-        { kategorie: "Zahlen", wort_deutsch: "Drei", wort_tagalog: "Tatlo" },
-        { kategorie: "Zahlen", wort_deutsch: "Vier", wort_tagalog: "Apat" },
-        { kategorie: "Zahlen", wort_deutsch: "Fünf", wort_tagalog: "Lima" },
-        { kategorie: "Zahlen", wort_deutsch: "Sechs", wort_tagalog: "Anim" },
-        { kategorie: "Zahlen", wort_deutsch: "Sieben", wort_tagalog: "Pito" },
-        { kategorie: "Zahlen", wort_deutsch: "Acht", wort_tagalog: "Walo" },
-        { kategorie: "Zahlen", wort_deutsch: "Neun", wort_tagalog: "Siyam" },
-        { kategorie: "Zahlen", wort_deutsch: "Zehn", wort_tagalog: "Sampu" }
-    ];
+body {
+    background-color: #F0DEC6; 
+    color: #3B5168;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-    let aktuelleRunde = [];
-    let index = 0;
-    let richtigesWort = null;
-    
-    let richtigZaehler = 0;
-    let falschZaehler = 0;
-    let streakZaehler = 0; 
-    let besterStreak = 0;  
+/* Haupt-Container */
+.trainer-container {
+    background-color: #ffffff;
+    /* Knackiger oberer Abstand direkt an der Kontur */
+    padding: 10px 35px 35px 35px !important; 
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(141, 43, 19, 0.12);
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    border: 3px solid #53768A;
+    position: relative; 
+    overflow: hidden;
+}
 
-    // DOM-Elemente
-    const container = document.querySelector('.trainer-container');
-    const startScreen = document.getElementById('start-screen');
-    const gameScreen = document.getElementById('game-screen');
-    const startBtn = document.getElementById('start-btn');
-    const mainHeading = document.getElementById('main-heading');
+.hidden {
+    display: none !important;
+}
+.screen-content {
+    width: 100%;
+}
 
-    const wortAnzeige = document.getElementById('gesuchtes-wort');
-    const antwortButtons = document.querySelectorAll('.antwort-btn');
-    const feedbackAnzeige = document.getElementById('feedback');
-    const weiterBtn = document.getElementById('weiter-btn');
-    const weiterBtnText = document.getElementById('weiter-btn-text');
-    const aktuelleFrageAnzeige = document.getElementById('aktuelle-frage');
-    const gesamteFragenAnzeige = document.getElementById('gesamte-fragen');
-    const progressBar = document.getElementById('progress-bar');
-    
-    const kategorieSelect = document.getElementById('kategorie-select');
-    const selectWrapper = document.getElementById('select-wrapper');
-    const streakContainer = document.getElementById('streak-container');
-    const streakText = document.getElementById('streak-text');
+/* HEADER NAVIGATION - PERFEKTE HORIZONTALE MITTE & DURCHGEHENDE LINIE */
+.header-nav-wrapper {
+    display: flex !important;
+    align-items: center !important;         /* Zentriert Logo-Bereich und Menü-Button perfekt vertikal */
+    justify-content: space-between !important; /* Schiebt Logo/H1 nach links, Menü nach ganz rechts */
+    width: 100% !important;
+    border-bottom: 2px solid #F0DEC6 !important; /* Die ununterbrochene Trennlinie */
+    padding-bottom: 12px !important;
+    margin-bottom: 25px !important;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+}
 
-    // Navigation & Dropdown im Menü
-    const menuToggle = document.getElementById('menu-toggle');
-    const sideNav = document.getElementById('side-nav');
-    const navClose = document.getElementById('nav-close');
-    const navHome = document.getElementById('nav-home');
-    const navKategorieSelect = document.getElementById('nav-kategorie-select');
-    const navSelectWrapper = document.getElementById('nav-select-wrapper');
+/* Container für Logo + Text */
+.logo-header-row {
+    display: flex !important;
+    align-items: center !important;         /* Zentriert Logo und Text zueinander auf der Mittellinie */
+    gap: 12px !important;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
 
-    // Ergebnis-Screen-Elemente
-    const resultScreen = document.getElementById('result-screen');
-    const resultSpeechContent = document.getElementById('result-speech-content');
-    const resultKamiImg = document.getElementById('result-kami-img');
-    const showDetailsBtn = document.getElementById('show-details-btn');
-    const restartBtn = document.getElementById('restart-btn');
+/* Setzt alle alten Stör-Abstände der inneren Elemente zurück */
+#header-logo, 
+.logo-header-row img,
+h1, 
+#main-heading {
+    margin: 0 !important;
+    padding: 0 !important;
+}
 
-    // --- NAVIGATION OVERLAY LOGIK ---
-    function openMenu() { sideNav.classList.add('open'); }
-    function closeMenu() { sideNav.classList.remove('open'); }
+.cafe-logo-small {
+    width: 45px;
+    height: auto;
+    flex-shrink: 0;
+    display: block !important;
+}
 
-    if (menuToggle) menuToggle.addEventListener('click', openMenu);
-    if (navClose) navClose.addEventListener('click', closeMenu);
+h1 {
+    font-family: 'Cherry Bomb One', cursive !important;
+    color: #B55219; 
+    font-size: 22px; 
+    line-height: 1.2;
+    text-transform: uppercase;
+}
 
-    if (navHome) {
-        navHome.addEventListener('click', (e) => {
-            e.preventDefault();
-            closeMenu();
-            goBackToStart();
-        });
-    }
+.game-active h1 {
+    font-size: 22px;
+}
 
-    if (navKategorieSelect) {
-        navKategorieSelect.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navSelectWrapper.classList.toggle('open');
-        });
+/* Das Hamburger Menü verhält sich jetzt wie ein normales Element auf der Mittellinie */
+.hamburger-menu {
+    position: relative !important;   /* Beendet das störende absolute Layout aus vorherigen Versionen */
+    top: auto !important;
+    right: auto !important;
+    transform: none !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    padding: 0;
+    z-index: 10;
+    margin: 0 !important;
+    flex-shrink: 0;
+}
 
-        navKategorieSelect.addEventListener('change', () => {
-            navSelectWrapper.classList.remove('open');
-            kategorieSelect.value = navKategorieSelect.value;
-            closeMenu();
-            spielInitialisieren();
-        });
-    }
+.hamburger-menu span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #53768A;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+}
 
-    function goBackToStart() {
-        container.classList.remove('game-active');
-        gameScreen.classList.add('hidden');
-        if (resultScreen) resultScreen.classList.add('hidden');
-        startScreen.classList.remove('hidden');
-        mainHeading.textContent = "Dein Pinoy Vokabeltrainer";
-    }
+/* **************************************************
+   NAVIGATION OVERLAY & DROP-DOWNS
+   ************************************************** */
 
-    // --- SELECTION CONTROL STARTSEITE ---
-    if (kategorieSelect) {
-        kategorieSelect.addEventListener('click', (e) => {
-            e.stopPropagation();
-            selectWrapper.classList.toggle('open');
-        });
-        
-        document.addEventListener('click', () => {
-            selectWrapper.classList.remove('open');
-            if(navSelectWrapper) navSelectWrapper.classList.remove('open');
-        });
-    }
+.nav-overlay {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(83, 118, 138, 0.98);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-    if (startBtn) {
-        startBtn.addEventListener('click', () => {
-            spielInitialisieren();
-        });
-    }
+.nav-overlay.open {
+    left: 0;
+}
 
-    // --- SPIEL-LOGIK ---
-    function spielInitialisieren() {
-        const gewaehlteKategorie = kategorieSelect.value;
-        const textKategorie = kategorieSelect.options[kategorieSelect.selectedIndex].text;
-        
-        navKategorieSelect.value = gewaehlteKategorie;
-        
-        container.classList.add('game-active');
-        mainHeading.textContent = `Kapitel: ${textKategorie}`;
+.white-select select {
+    border-color: #ffffff !important;
+    color: #53768A !important;
+    background-color: #ffffff !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") !important;
+}
 
-        startScreen.classList.add('hidden');
-        if (resultScreen) resultScreen.classList.add('hidden');
-        gameScreen.classList.remove('hidden');
+.white-select.open select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>") !important;
+}
 
-        if (gewaehlteKategorie === "alle") {
-            aktuelleRunde = [...alleVokabeln];
-        } else {
-            aktuelleRunde = alleVokabeln.filter(v => v.kategorie === gewaehlteKategorie);
-        }
-        
-        aktuelleRunde.sort(() => Math.random() - 0.5);
-        if (aktuelleRunde.length > 10) aktuelleRunde = aktuelleRunde.slice(0, 10);
+.close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 38px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    line-height: 1;
+}
 
-        index = 0;
-        richtigZaehler = 0;
-        falschZaehler = 0;
-        streakZaehler = 0;
-        besterStreak = 0;
-        streakContainer.style.display = 'none'; 
-        gesamteFragenAnzeige.textContent = aktuelleRunde.length;
-        frageLaden();
-    }
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: left;
+    width: 75%;
+}
 
-    function frageLaden() {
-        if (index >= aktuelleRunde.length) {
-            zeigeTestergebnis();
-            return;
-        }
+.nav-links a {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-        feedbackAnzeige.textContent = "";
-        feedbackAnzeige.className = "feedback-box";
-        weiterBtn.style.display = 'none';
-        weiterBtnText.textContent = "Nächste Frage";
-        
-        aktuelleFrageAnzeige.textContent = index + 1;
-        
-        const prozent = ((index + 1) / aktuelleRunde.length) * 100;
-        progressBar.style.width = `${prozent}%`;
+.nav-links a:hover span {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
 
-        richtigesWort = aktuelleRunde[index];
-        wortAnzeige.textContent = richtigesWort.wort_tagalog;
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
 
-        let falscheOptionen = alleVokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
-        falscheOptionen.sort(() => Math.random() - 0.5);
+.nav-category-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        let optionen = [richtigesWort.wort_deutsch, falscheOptionen[0].wort_deutsch, falscheOptionen[1].wort_deutsch, falscheOptionen[2].wort_deutsch];
-        optionen.sort(() => Math.random() - 0.5);
+.nav-static-item {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-        antwortButtons.forEach((btn, i) => {
-            btn.style.display = 'block';
-            btn.textContent = optionen[i];
-            btn.className = "antwort-btn"; 
-            btn.disabled = false;
-        });
-    }
+/* WILLKOMMENSBOX (STARTSEITE) */
+.welcome-box {
+    margin: 10px 0 25px 0 !important; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
 
-    function antwortPruefen(e) {
-        const geklickterButton = e.target;
-        const gewaehlteAntwort = geklickterButton.textContent;
-        
-        antwortButtons.forEach(btn => btn.disabled = true);
+.kami-welcome-img {
+    width: 130px;
+    height: auto;
+    order: 2; 
+    animation: floating 3s ease-in-out infinite;
+}
 
-        if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
-            geklickterButton.classList.add('richtig-vollflaechig');
-            
-            richtigZaehler++;
-            streakZaehler++;
-            
-            if (streakZaehler > besterStreak) {
-                besterStreak = streakZaehler;
-            }
-            
-            streakText.textContent = `${streakZaehler}x richtig! 🔥`;
-            streakContainer.style.display = 'flex'; 
+.speech-bubble.bubble-top {
+    order: 1; 
+    position: relative;
+    background: #53768A; 
+    color: white;
+    border-radius: 16px;
+    padding: 18px 22px;
+}
 
-            feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
-            feedbackAnzeige.className = "feedback-box richtig-text";
-        } else {
-            geklickterButton.classList.add('falsch-vollflaechig');
-            
-            falschZaehler++;
-            streakZaehler = 0;
-            streakContainer.style.display = 'none'; 
+.speech-bubble.bubble-top:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px 0 10px;
+    border-style: solid;
+    border-color: #53768A transparent transparent transparent;
+    display: block;
+    width: 0;
+}
 
-            feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
-            feedbackAnzeige.className = "feedback-box falsch-text";
-            
-            antwortButtons.forEach(btn => {
-                if (btn.textContent === richtigesWort.wort_deutsch) {
-                    btn.classList.add('richtig-vollflaechig');
-                }
-            });
-        }
+/* TEST MODUS (VOKABELTRAINER) */
+.kami-frage-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+}
 
-        if (index === aktuelleRunde.length - 1) {
-            weiterBtnText.textContent = "Test absenden";
-        }
+.kami-avatar {
+    width: 85px;
+    height: auto;
+}
 
-        weiterBtn.style.display = 'flex'; 
-    }
+.kami-frage-container .speech-bubble {
+    position: relative;
+    background: #B55219; 
+    color: white;
+    border-radius: 16px;
+    padding: 15px 20px;
+    flex-grow: 1;
+}
 
-    // --- INTERAKTIVE ERGEBNIS-STEUERUNG ---
-    function zeigeTestergebnis() {
-        gameScreen.classList.add('hidden');
-        resultScreen.classList.remove('hidden');
-        
-        resultKamiImg.src = 'kami_zufrieden.png';
-        showDetailsBtn.classList.remove('hidden');
-        restartBtn.classList.add('hidden');
-        
-        resultSpeechContent.innerHTML = `
-            <p><strong>Geschafft! 🌟</strong></p>
-            <p>Du hast den Test beendet! Du kannst richtig stolz auf dich sein – ganz egal, wie es gelaufen ist. Es ist schließlich noch kein Meister vom Himmel gefallen und Sprachen lernen ist ein wunderbarer Prozess! Bleib dran!</p>
-        `;
+.kami-frage-container .speech-bubble:after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 10px 10px 10px 0;
+    border-style: solid;
+    border-color: transparent #B55219 transparent transparent;
+    display: block;
+    width: 0;
+}
 
-        showDetailsBtn.onclick = function() {
-            showDetailsBtn.classList.add('hidden');
-            restartBtn.classList.remove('hidden');
-            
-            const gesamtFragen = richtigZaehler + falschZaehler;
-            const istGut = richtigZaehler >= (gesamtFragen / 2);
-            
-            if (istGut) {
-                resultKamiImg.src = 'kami_überrascht.png';
-                resultSpeechContent.innerHTML = `
-                    <p><strong>Wow, ich bin beeindruckt! 😮🎉</strong></p>
-                    <p>Das lief richtig super! Hier ist deine Auswertung:</p>
-                    <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
-                    <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
-                    <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
-                    <p>&nbsp;</p>
-                `;
-            } else {
-                resultKamiImg.src = 'kami_fragend.png';
-                resultSpeechContent.innerHTML = `
-                    <p><strong>Hm, lass uns mal schauen... 🤔💡</strong></p>
-                    <p>Da waren ein paar knifflige Wörter dabei, oder? Macht gar nichts! Deine Statistik:</p>
-                    <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
-                    <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
-                    <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
-                    <p style="margin-top: 12px; font-weight:600;">Übung macht den Pinoy-Meister. Gleich nochmal probieren?</p>
-                    <p>&nbsp;</p>
-                `;
-            }
-        };
+.bubble-caption {
+    margin: 0;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #F0DEC6;
+}
 
-        restartBtn.onclick = function() {
-            goBackToStart();
-        };
-    }
+#gesuchtes-wort {
+    margin: 5px 0 0 0;
+    font-size: 28px;
+    font-weight: 700;
+}
 
-    antwortButtons.forEach(btn => btn.addEventListener('click', antwortPruefen));
-    if (weiterBtn) {
-        weiterBtn.addEventListener('click', () => {
-            index++;
-            frageLaden();
-        });
-    }
-});
+/* DROP-DOWNS GENERAL */
+.category-start-section {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #53768A;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+select {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid #53768A; 
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700; 
+    color: #3B5168;
+    background-color: #ffffff;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    text-align: left; 
+    text-align-last: left; 
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 18px;
+    transition: all 0.2s ease;
+}
+
+.select-wrapper.open select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2353768A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='18 15 12 9 6 15'></polyline></svg>");
+}
+
+/* FORTSCHRITTS-BALKEN & SYMMETRISCHER STREAK */
+.fortschritt-block {
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.fortschritt-info {
+    font-size: 13px;
+    font-weight: 700;
+    color: #53768A;
+    margin-bottom: 6px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #F0DEC6;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #DBA022; 
+    transition: width 0.3s ease;
+}
+
+/* OPTIMIERTER SYMMETRISCHER STREAK-CONTAINER */
+.streak-center-container {
+    display: none; 
+    justify-content: center;
+    width: 100%;
+    margin-top: 4px !important;    
+    margin-bottom: 4px !important; 
+}
+
+.streak-badge {
+    background-color: #FFF0E6;
+    border: 2px solid #FF8833;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #E65C00;
+    white-space: nowrap;
+    display: inline-block;
+    animation: pulseStreak 1.5s infinite alternate;
+}
+
+/* ANTWORTEN & FEEDBACK */
+.antwort-box {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.antwort-btn {
+    background-color: #ffffff;
+    color: #3B5168;
+    border: 2px solid #53768A; 
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    text-align: center; 
+}
+
+.antwort-btn:hover:not(:disabled) {
+    background-color: #F0DEC6;
+    border-color: #B55219;
+    color: #B55219;
+}
+
+.antwort-btn.richtig-vollflaechig {
+    background-color: #E8F5E9 !important; 
+    border-color: #2E7D32 !important;     
+    color: #2E7D32 !important;
+}
+
+.antwort-btn.falsch-vollflaechig {
+    background-color: #FFEBEE !important;  
+    border-color: #C62828 !important;      
+    color: #C62828 !important;
+}
+
+.feedback-box {
+    min-height: 35px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px 0;
+    background: transparent !important;
+    border: none !important;
+}
+
+.feedback-box.richtig-text { color: #2E7D32 !important; }
+.feedback-box.falsch-text { color: #C62828 !important; }
+
+.primary-btn {
+    width: 100%;
+    background-color: #B55219;
+    color: #ffffff;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(181, 82, 25, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.primary-btn:hover { background-color: #8D2B13; }
+
+.white-arrow {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s;
+}
+
+.primary-btn:hover .white-arrow { transform: translateX(5px); }
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulseStreak {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.04); }
+}
