@@ -57,11 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let index = 0;
     let richtigesWort = null;
     
-    // Neue Variablen für die Auswertung
     let richtigZaehler = 0;
     let falschZaehler = 0;
-    let streakZaehler = 0; // Aktueller Streak
-    let besterStreak = 0;  // Höchster Streak am Stück
+    let streakZaehler = 0; 
+    let besterStreak = 0;  
 
     // DOM-Elemente
     const container = document.querySelector('.trainer-container');
@@ -74,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const antwortButtons = document.querySelectorAll('.antwort-btn');
     const feedbackAnzeige = document.getElementById('feedback');
     const weiterBtn = document.getElementById('weiter-btn');
+    const weiterBtnText = document.getElementById('weiter-btn-text');
     const aktuelleFrageAnzeige = document.getElementById('aktuelle-frage');
     const gesamteFragenAnzeige = document.getElementById('gesamte-fragen');
     const progressBar = document.getElementById('progress-bar');
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const navKategorieSelect = document.getElementById('nav-kategorie-select');
     const navSelectWrapper = document.getElementById('nav-select-wrapper');
 
-    // Neue Ergebnis-Screen-Elemente
+    // Ergebnis-Screen-Elemente
     const resultScreen = document.getElementById('result-screen');
     const resultSpeechContent = document.getElementById('result-speech-content');
     const resultKamiImg = document.getElementById('result-kami-img');
@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Dropdown-Interaktion im Menü
     if (navKategorieSelect) {
         navKategorieSelect.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -197,6 +196,10 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackAnzeige.textContent = "";
         feedbackAnzeige.className = "feedback-box";
         weiterBtn.style.display = 'none';
+        
+        // Standardmäßig Button auf "Nächste Frage" setzen
+        weiterBtnText.textContent = "Nächste Frage";
+        
         aktuelleFrageAnzeige.textContent = index + 1;
         
         const prozent = ((index + 1) / aktuelleRunde.length) * 100;
@@ -231,7 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
             richtigZaehler++;
             streakZaehler++;
             
-            // Besten Streak prüfen
             if (streakZaehler > besterStreak) {
                 besterStreak = streakZaehler;
             }
@@ -257,15 +259,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
+
+        // NEU: Wenn es das letzte Wort der Runde (index 9 bei 10 Fragen) ist, ändere den Text auf "Test absenden"
+        if (index === aktuelleRunde.length - 1) {
+            weiterBtnText.textContent = "Test absenden";
+        }
+
         weiterBtn.style.display = 'flex'; 
     }
 
-    // --- NEUE INTERAKTIVE ERGEBNIS-STEUERUNG ---
+    // --- INTERAKTIVE ERGEBNIS-STEUERUNG ---
     function zeigeTestergebnis() {
         gameScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
         
-        // Phase 1: Begrüßung durch kami_zufrieden
         resultKamiImg.src = 'kami_zufrieden.png';
         showDetailsBtn.classList.remove('hidden');
         restartBtn.classList.add('hidden');
@@ -275,12 +282,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Du hast den Test beendet! Du kannst richtig stolz auf dich sein – ganz egal, wie es gelaufen ist. Es ist schließlich noch kein Meister vom Himmel gefallen und Sprachen lernen ist ein wunderbarer Prozess! Bleib dran!</p>
         `;
 
-        // Klick auf "Meine Ergebnisse erfahren" (Wechsel zu Phase 2)
         showDetailsBtn.onclick = function() {
             showDetailsBtn.classList.add('hidden');
             restartBtn.classList.remove('hidden');
             
-            // Auswertung ob gut oder schlecht (hier definiert als: mindestens die Hälfte richtig)
             const gesamtFragen = richtigZaehler + falschZaehler;
             const istGut = richtigZaehler >= (gesamtFragen / 2);
             
@@ -302,11 +307,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
                     <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
                     <p style="font-size: 13px; margin-top: 8px; font-weight:600;">Übung macht den Pinoy-Meister. Gleich nochmal probieren?</p>
+                    <p>&nbsp;</p>
                 `;
             }
         };
 
-        // Klick auf "Zurück zum Start"
         restartBtn.onclick = function() {
             goBackToStart();
         };
