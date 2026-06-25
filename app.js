@@ -56,7 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let aktuelleRunde = [];
     let index = 0;
     let richtigesWort = null;
-    let streakZaehler = 0;
+    
+    // Neue Variablen für die Auswertung
+    let richtigZaehler = 0;
+    let falschZaehler = 0;
+    let streakZaehler = 0; // Aktueller Streak
+    let besterStreak = 0;  // Höchster Streak am Stück
 
     // DOM-Elemente
     const container = document.querySelector('.trainer-container');
@@ -86,6 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const navKategorieSelect = document.getElementById('nav-kategorie-select');
     const navSelectWrapper = document.getElementById('nav-select-wrapper');
 
+    // Neue Ergebnis-Screen-Elemente
+    const resultScreen = document.getElementById('result-screen');
+    const resultSpeechContent = document.getElementById('result-speech-content');
+    const resultKamiImg = document.getElementById('result-kami-img');
+    const showDetailsBtn = document.getElementById('show-details-btn');
+    const restartBtn = document.getElementById('restart-btn');
+
     // --- NAVIGATION OVERLAY LOGIK ---
     function openMenu() { sideNav.classList.add('open'); }
     function closeMenu() { sideNav.classList.remove('open'); }
@@ -110,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         navKategorieSelect.addEventListener('change', () => {
             navSelectWrapper.classList.remove('open');
-            // Synchronisiert Startseiten-Dropdown mit dem Navigations-Dropdown
             kategorieSelect.value = navKategorieSelect.value;
             closeMenu();
             spielInitialisieren();
@@ -120,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function goBackToStart() {
         container.classList.remove('game-active');
         gameScreen.classList.add('hidden');
+        if (resultScreen) resultScreen.classList.add('hidden');
         startScreen.classList.remove('hidden');
         mainHeading.textContent = "Dein Pinoy Vokabeltrainer";
     }
@@ -148,14 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const gewaehlteKategorie = kategorieSelect.value;
         const textKategorie = kategorieSelect.options[kategorieSelect.selectedIndex].text;
         
-        // Synchronisiert die Werte beider Selektoren im Hintergrund
         navKategorieSelect.value = gewaehlteKategorie;
         
-        // Fügt dem Container eine Klasse hinzu, um CSS-Anpassungen (z.B. kleinere H1) zu triggern
         container.classList.add('game-active');
         mainHeading.textContent = `Kapitel: ${textKategorie}`;
 
         startScreen.classList.add('hidden');
+        if (resultScreen) resultScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
 
         if (gewaehlteKategorie === "alle") {
@@ -168,7 +179,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (aktuelleRunde.length > 10) aktuelleRunde = aktuelleRunde.slice(0, 10);
 
         index = 0;
+        richtigZaehler = 0;
+        falschZaehler = 0;
         streakZaehler = 0;
+        besterStreak = 0;
         streakContainer.style.display = 'none'; 
         gesamteFragenAnzeige.textContent = aktuelleRunde.length;
         frageLaden();
@@ -176,11 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function frageLaden() {
         if (index >= aktuelleRunde.length) {
-            wortAnzeige.textContent = "🎉 Sige na!";
-            feedbackAnzeige.innerHTML = `<span>✨ <strong>Ausgezeichnet!</strong> Runde beendet. Finaler Streak: <strong>${streakZaehler}🔥</strong></span>`;
-            feedbackAnzeige.className = "feedback-box richtig-text";
-            antwortButtons.forEach(btn => btn.style.display = 'none');
-            weiterBtn.style.display = 'none';
+            zeigeTestergebnis();
             return;
         }
 
@@ -218,7 +228,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
             geklickterButton.classList.add('richtig-vollflaechig');
             
+            richtigZaehler++;
             streakZaehler++;
+            
+            // Besten Streak prüfen
+            if (streakZaehler > besterStreak) {
+                besterStreak = streakZaehler;
+            }
+            
             streakText.textContent = `${streakZaehler}x richtig! 🔥`;
             streakContainer.style.display = 'flex'; 
 
@@ -227,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             geklickterButton.classList.add('falsch-vollflaechig');
             
+            falschZaehler++;
             streakZaehler = 0;
             streakContainer.style.display = 'none'; 
 
@@ -240,6 +258,58 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
         weiterBtn.style.display = 'flex'; 
+    }
+
+    // --- NEUE INTERAKTIVE ERGEBNIS-STEUERUNG ---
+    function zeigeTestergebnis() {
+        gameScreen.classList.add('hidden');
+        resultScreen.classList.remove('hidden');
+        
+        // Phase 1: Begrüßung durch kami_zufrieden
+        resultKamiImg.src = 'kami_zufrieden.png';
+        showDetailsBtn.classList.remove('hidden');
+        restartBtn.classList.add('hidden');
+        
+        resultSpeechContent.innerHTML = `
+            <p><strong>Geschafft! 🌟</strong></p>
+            <p>Du hast den Test beendet! Du kannst richtig stolz auf dich sein – ganz egal, wie es gelaufen ist. Es ist schließlich noch kein Meister vom Himmel gefallen und Sprachen lernen ist ein wunderbarer Prozess! Bleib dran!</p>
+        `;
+
+        // Klick auf "Meine Ergebnisse erfahren" (Wechsel zu Phase 2)
+        showDetailsBtn.onclick = function() {
+            showDetailsBtn.classList.add('hidden');
+            restartBtn.classList.remove('hidden');
+            
+            // Auswertung ob gut oder schlecht (hier definiert als: mindestens die Hälfte richtig)
+            const gesamtFragen = richtigZaehler + falschZaehler;
+            const istGut = richtigZaehler >= (gesamtFragen / 2);
+            
+            if (istGut) {
+                resultKamiImg.src = 'kami_überrascht.png';
+                resultSpeechContent.innerHTML = `
+                    <p><strong>Wow, ich bin beeindruckt! 😮🎉</strong></p>
+                    <p>Das lief richtig super! Hier ist deine Auswertung:</p>
+                    <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
+                    <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
+                    <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
+                `;
+            } else {
+                resultKamiImg.src = 'kami_fragend.png';
+                resultSpeechContent.innerHTML = `
+                    <p><strong>Hm, lass uns mal schauen... 🤔💡</strong></p>
+                    <p>Da waren ein paar knifflige Wörter dabei, oder? Macht gar nichts! Deine Statistik:</p>
+                    <p style="margin: 5px 0;">✅ Richtig: <strong>${richtigZaehler}</strong></p>
+                    <p style="margin: 5px 0;">❌ Falsch: <strong>${falschZaehler}</strong></p>
+                    <p style="margin: 5px 0;">🔥 Bester Streak: <strong>${besterStreak} am Stück!</strong></p>
+                    <p style="font-size: 13px; margin-top: 8px; font-weight:600;">Übung macht den Pinoy-Meister. Gleich nochmal probieren?</p>
+                `;
+            }
+        };
+
+        // Klick auf "Zurück zum Start"
+        restartBtn.onclick = function() {
+            goBackToStart();
+        };
     }
 
     antwortButtons.forEach(btn => btn.addEventListener('click', antwortPruefen));
