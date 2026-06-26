@@ -1,34 +1,36 @@
-// 1. Supabase-Verbindung einrichten
-const SUPABASE_URL = 'sb_publishable_VdIEqUVVCTlE6LkYylkxfg_WbXsixEJ'; // Hier mit deiner URL ersetzen
-const SUPABASE_ANON_KEY = 'https://ekytiqnngpcvaskiqgef.supabase.co/rest/v1/'; // Hier mit deinem Anon-Key ersetzen
+// 1. Supabase-Verbindung einrichten (URL und Keys jetzt an der richtigen Stelle!)
+const SUPABASE_URL = 'https://ekytiqnngpcvaskiqgef.supabase.co'; 
+const SUPABASE_ANON_KEY = 'sb_publishable_VdIEqUVVCTlE6LkYylkxfg_WbXsixEJ'; 
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Nutzen des globalen Supabase-Objekts aus dem CDN-Skript
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    let vokabeln = []; // Startet jetzt leer und füllt sich aus der Datenbank
+    let vokabeln = []; // Startet leer und füllt sich aus der Datenbank
 
-// Funktion, um die Wörter aus Supabase zu laden
-async function ladeVokabelnAusDatenbank() {
-    try {
-        // Fragt die Tabelle 'vocabeln' ab und holt alle Spalten (*)
-        // Vorher stand hier wahrscheinlich .from('vokabeln')
-const { data, error } = await supabase
-    .from('vocabeln') 
-    .select('*');
+    // Funktion, um die Wörter aus Supabase zu laden
+    async function ladeVokabelnAusDatenbank() {
+        try {
+            console.log("Starte Abruf aus Supabase...");
+            // Nutzt die korrekte Tabelle "vocabeln" mit "c"
+            const { data, error } = await supabaseClient
+                .from('vocabeln') 
+                .select('*');
 
-        if (error) {
-            throw error;
+            if (error) {
+                throw error;
+            }
+
+            // Das leere Array mit den echten Daten befüllen
+            vokabeln = data;
+            console.log("Erfolgreich geladen:", vokabeln);
+
+        } catch (error) {
+            console.error("Fehler beim Laden aus Supabase:", error.message);
+            alert("Fehler beim Laden der Datenbank: " + error.message);
         }
-
-        // Das leere Array mit den echten Daten befüllen
-        vokabeln = data;
-        console.log("Erfolgreich geladen:", vokabeln);
-
-    } catch (error) {
-        console.error("Fehler beim Laden aus Supabase:", error.message);
-        // Optional: Hier ein Fallback-Wort einbauen, falls das Internet weg ist
     }
-}
 
     let aktuelleRunde = [];
     let index = 0;
@@ -125,25 +127,33 @@ const { data, error } = await supabase
         });
     }
 
-   if (startBtn) {
-    // Das 'async' sorgt dafür, dass wir innerhalb der Funktion 'await' nutzen können
-    startBtn.addEventListener('click', async () => {
-        // 1. Text kurz ändern, damit der Nutzer merkt, dass etwas passiert
-        const buttonText = startBtn.querySelector('span');
-        if (buttonText) {
-            buttonText.textContent = "Lädt Vokabeln...";
-        }
-        
-        // 2. Daten live aus Supabase abholen
-        await ladeVokabelnAusDatenbank();
-        
-        // 3. Erst wenn die Daten da sind, das Spiel initialisieren
-        spielInitialisieren();
-    });
-}
+    if (startBtn) {
+        startBtn.addEventListener('click', async () => {
+            const buttonText = startBtn.querySelector('span');
+            if (buttonText) {
+                buttonText.textContent = "Lädt Vokabeln...";
+            }
+            
+            // Erst Daten laden
+            await ladeVokabelnAusDatenbank();
+            
+            // Button-Text wieder zurücksetzen
+            if (buttonText) {
+                buttonText.textContent = "Reise starten!";
+            }
+            
+            // Dann Spiel starten
+            spielInitialisieren();
+        });
+    }
 
     // --- SPIEL-LOGIK ---
     function spielInitialisieren() {
+        if (!vokabeln || vokabeln.length === 0) {
+            alert("Es wurden keine Vokabeln geladen. Bitte überprüfe deine Datenbank-Verbindung.");
+            return;
+        }
+
         const gewaehlteKategorie = kategorieSelect.value;
         const textKategorie = kategorieSelect.options[kategorieSelect.selectedIndex].text;
         
@@ -156,12 +166,19 @@ const { data, error } = await supabase
         if (resultScreen) resultScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
 
+        // Fehler behoben: Greift jetzt auf "vokabeln" statt "alleVokabeln" zu
         if (gewaehlteKategorie === "alle") {
-            aktuelleRunde = [...alleVokabeln];
+            aktuelleRunde = [...vokabeln];
         } else {
-            aktuelleRunde = alleVokabeln.filter(v => v.kategorie === gewaehlteKategorie);
+            aktuelleRunde = vokabeln.filter(v => v.kategorie === gewaehlteKategorie);
         }
         
+        if (aktuelleRunde.length === 0) {
+            alert("Keine Vokabeln in dieser Kategorie gefunden!");
+            goBackToStart();
+            return;
+        }
+
         aktuelleRunde.sort(() => Math.random() - 0.5);
         if (aktuelleRunde.length > 10) aktuelleRunde = aktuelleRunde.slice(0, 10);
 
@@ -194,10 +211,22 @@ const { data, error } = await supabase
         richtigesWort = aktuelleRunde[index];
         wortAnzeige.textContent = richtigesWort.wort_tagalog;
 
-        let falscheOptionen = alleVokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
+        // Fehler behoben: Greift jetzt auf "vokabeln" statt "alleVokabeln" zu
+        let falscheOptionen = vokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
+        
+        // Falls wir nicht genug falsche Optionen in der DB haben, füllen wir mit Platzhaltern auf
+        while (falscheOptionen.length < 3) {
+            falscheOptionen.push({ wort_deutsch: "---" });
+        }
+        
         falscheOptionen.sort(() => Math.random() - 0.5);
 
-        let optionen = [richtigesWort.wort_deutsch, falscheOptionen[0].wort_deutsch, falscheOptionen[1].wort_deutsch, falscheOptionen[2].wort_deutsch];
+        let optionen = [
+            richtigesWort.wort_deutsch, 
+            falscheOptionen[0].wort_deutsch, 
+            falscheOptionen[1].wort_deutsch, 
+            falscheOptionen[2].wort_deutsch
+        ];
         optionen.sort(() => Math.random() - 0.5);
 
         antwortButtons.forEach((btn, i) => {
@@ -224,7 +253,7 @@ const { data, error } = await supabase
                 besterStreak = streakZaehler;
             }
             
-           streakText.textContent = `${streakZaehler}x Streak 🔥`;
+            streakText.textContent = `${streakZaehler}x Streak 🔥`;
             streakContainer.style.display = 'flex'; 
 
             feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
@@ -253,7 +282,7 @@ const { data, error } = await supabase
         weiterBtn.style.display = 'flex'; 
     }
 
-   // --- INTERAKTIVE ERGEBNIS-STEUERUNG ---
+    // --- INTERAKTIVE ERGEBNIS-STEUERUNG ---
     function zeigeTestergebnis() {
         gameScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
