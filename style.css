@@ -475,6 +475,9 @@ select {
 
 .primary-btn:hover .white-arrow { transform: translateX(5px); }
 
+.primary-btn * {
+    pointer-events: none !important;
+}
 @keyframes floating {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
