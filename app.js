@@ -5,58 +5,29 @@ const SUPABASE_ANON_KEY = 'https://ekytiqnngpcvaskiqgef.supabase.co/rest/v1/'; /
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 document.addEventListener("DOMContentLoaded", () => {
 
-    const alleVokabeln = [
-        { kategorie: "Farben", wort_deutsch: "Rot", wort_tagalog: "Pula" },
-        { kategorie: "Farben", wort_deutsch: "Blau", wort_tagalog: "Asul" },
-        { kategorie: "Farben", wort_deutsch: "Gelb", wort_tagalog: "Dilaw" },
-        { kategorie: "Farben", wort_deutsch: "Grün", wort_tagalog: "Berde" },
-        { kategorie: "Farben", wort_deutsch: "Schwarz", wort_tagalog: "Itim" },
-        { kategorie: "Farben", wort_deutsch: "Weiß", wort_tagalog: "Puti" },
-        { kategorie: "Farben", wort_deutsch: "Braun", wort_tagalog: "Kayumanggi" },
-        { kategorie: "Farben", wort_deutsch: "Rosa", wort_tagalog: "Rosas" },
-        { kategorie: "Farben", wort_deutsch: "Orange", wort_tagalog: "Nalandan" },
-        { kategorie: "Farben", wort_deutsch: "Grau", wort_tagalog: "Abuhin" },
-        { kategorie: "Tiere", wort_deutsch: "Hund", wort_tagalog: "Aso" },
-        { kategorie: "Tiere", wort_deutsch: "Katze", wort_tagalog: "Pusa" },
-        { kategorie: "Tiere", wort_deutsch: "Vogel", wort_tagalog: "Ibon" },
-        { kategorie: "Tiere", wort_deutsch: "Fisch", wort_tagalog: "Isda" },
-        { kategorie: "Tiere", wort_deutsch: "Schwein", wort_tagalog: "Baboy" },
-        { kategorie: "Tiere", wort_deutsch: "Huhn", wort_tagalog: "Manok" },
-        { kategorie: "Tiere", wort_deutsch: "Kuh", wort_tagalog: "Baka" },
-        { kategorie: "Tiere", wort_deutsch: "Pferd", wort_tagalog: "Kabayo" },
-        { kategorie: "Tiere", wort_deutsch: "Affe", wort_tagalog: "Unggoy" },
-        { kategorie: "Tiere", wort_deutsch: "Maus", wort_tagalog: "Daga" },
-        { kategorie: "Essen", wort_deutsch: "Reis", wort_tagalog: "Kanin" },
-        { kategorie: "Essen", wort_deutsch: "Fleisch", wort_tagalog: "Karne" },
-        { kategorie: "Essen", wort_deutsch: "Gemüse", wort_tagalog: "Gulay" },
-        { kategorie: "Essen", wort_deutsch: "Obst", wort_tagalog: "Prutas" },
-        { kategorie: "Essen", wort_deutsch: "Brot", wort_tagalog: "Tinapay" },
-        { kategorie: "Essen", wort_deutsch: "Ei", wort_tagalog: "Itlog" },
-        { kategorie: "Essen", wort_deutsch: "Fisch (Speise)", wort_tagalog: "Ulam" },
-        { kategorie: "Essen", wort_deutsch: "Wasser", wort_tagalog: "Tubig" },
-        { kategorie: "Essen", wort_deutsch: "Milch", wort_tagalog: "Gatas" },
-        { kategorie: "Essen", wort_deutsch: "Suppe", wort_tagalog: "Sabaw" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Hallo / Guten Tag", wort_tagalog: "Kamusta" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Guten Morgen", wort_tagalog: "Magandang umaga" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Guten Abend", wort_tagalog: "Magandang gabi" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Danke", wort_tagalog: "Salamat" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Vielen Dank", wort_tagalog: "Maraming salamat" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Bitte / Gern geschehen", wort_tagalog: "Walang anuman" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Wie geht es dir?", wort_tagalog: "Kamusta ka?" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Gut", wort_tagalog: "Mabuti" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Auf Wiedersehen", wort_tagalog: "Paalam" },
-        { kategorie: "Begrüßungen", wort_deutsch: "Tschüss (informell)", wort_tagalog: "Sige na" },
-        { kategorie: "Zahlen", wort_deutsch: "Eins", wort_tagalog: "Isa" },
-        { kategorie: "Zahlen", wort_deutsch: "Zwei", wort_tagalog: "Dalawa" },
-        { kategorie: "Zahlen", wort_deutsch: "Drei", wort_tagalog: "Tatlo" },
-        { kategorie: "Zahlen", wort_deutsch: "Vier", wort_tagalog: "Apat" },
-        { kategorie: "Zahlen", wort_deutsch: "Fünf", wort_tagalog: "Lima" },
-        { kategorie: "Zahlen", wort_deutsch: "Sechs", wort_tagalog: "Anim" },
-        { kategorie: "Zahlen", wort_deutsch: "Sieben", wort_tagalog: "Pito" },
-        { kategorie: "Zahlen", wort_deutsch: "Acht", wort_tagalog: "Walo" },
-        { kategorie: "Zahlen", wort_deutsch: "Neun", wort_tagalog: "Siyam" },
-        { kategorie: "Zahlen", wort_deutsch: "Zehn", wort_tagalog: "Sampu" }
-    ];
+    let vokabeln = []; // Startet jetzt leer und füllt sich aus der Datenbank
+
+// Funktion, um die Wörter aus Supabase zu laden
+async function ladeVokabelnAusDatenbank() {
+    try {
+        // Fragt die Tabelle 'vokabeln' ab und holt alle Spalten (*)
+        const { data, error } = await supabase
+            .from('vokabeln')
+            .select('*');
+
+        if (error) {
+            throw error;
+        }
+
+        // Das leere Array mit den echten Daten befüllen
+        vokabeln = data;
+        console.log("Erfolgreich geladen:", vokabeln);
+
+    } catch (error) {
+        console.error("Fehler beim Laden aus Supabase:", error.message);
+        // Optional: Hier ein Fallback-Wort einbauen, falls das Internet weg ist
+    }
+}
 
     let aktuelleRunde = [];
     let index = 0;
