@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 besterStreak = streakZaehler;
             }
             
-            streakText.textContent = `${streakZaehler}x richtig! 🔥`;
+           streakText.textContent = `${streakZaehler}x Streak 🔥`;
             streakContainer.style.display = 'flex'; 
 
             feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
