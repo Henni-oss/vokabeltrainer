@@ -10,10 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
 // Funktion, um die Wörter aus Supabase zu laden
 async function ladeVokabelnAusDatenbank() {
     try {
-        // Fragt die Tabelle 'vokabeln' ab und holt alle Spalten (*)
-        const { data, error } = await supabase
-            .from('vokabeln')
-            .select('*');
+        // Fragt die Tabelle 'vocabeln' ab und holt alle Spalten (*)
+        // Vorher stand hier wahrscheinlich .from('vokabeln')
+const { data, error } = await supabase
+    .from('vocabeln') 
+    .select('*');
 
         if (error) {
             throw error;
