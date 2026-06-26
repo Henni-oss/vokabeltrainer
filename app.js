@@ -1,3 +1,8 @@
+// 1. Supabase-Verbindung einrichten
+const SUPABASE_URL = 'sb_publishable_VdIEqUVVCTlE6LkYylkxfg_WbXsixEJ'; // Hier mit deiner URL ersetzen
+const SUPABASE_ANON_KEY = 'https://ekytiqnngpcvaskiqgef.supabase.co/rest/v1/'; // Hier mit deinem Anon-Key ersetzen
+
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 document.addEventListener("DOMContentLoaded", () => {
 
     const alleVokabeln = [
