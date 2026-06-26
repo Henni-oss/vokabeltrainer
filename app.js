@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         frageLaden();
     }
 
-    function frageLaden() {
+  function frageLaden() {
         if (index >= aktuelleRunde.length) {
             zeigeTestergebnis();
             return;
@@ -211,21 +211,37 @@ document.addEventListener("DOMContentLoaded", () => {
         richtigesWort = aktuelleRunde[index];
         wortAnzeige.textContent = richtigesWort.wort_tagalog;
 
-        // Fehler behoben: Greift jetzt auf "vokabeln" statt "alleVokabeln" zu
-        let falscheOptionen = vokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
-        
-        // Falls wir nicht genug falsche Optionen in der DB haben, füllen wir mit Platzhaltern auf
-        while (falscheOptionen.length < 3) {
-            falscheOptionen.push({ wort_deutsch: "---" });
+        // --- HIER IST DIE NEUE KATEGORIE-STRIKTE LOGIK ---
+        const gewaehlteKategorie = kategorieSelect.value;
+        let falscheOptionen = [];
+
+        if (gewaehlteKategorie === "alle") {
+            // Bei "Alle Wörter" filtern wir einfach wie gewohnt aus der gesamten Datenbank
+            falscheOptionen = vokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
+        } else {
+            // NUR Wörter aus derselben Kategorie vorschlagen!
+            falscheOptionen = vokabeln.filter(v => v.kategorie === gewaehlteKategorie && v.wort_deutsch !== richtigesWort.wort_deutsch);
+            
+            // Sicherheits-Fallback: Falls eine Kategorie weniger als 3 andere Wörter hat, 
+            // füllen wir den Rest mit Wörtern aus anderen Kategorien auf, damit die Buttons nicht leer bleiben.
+            if (falscheOptionen.length < 3) {
+                let restlicheWoerter = vokabeln.filter(v => v.kategorie !== gewaehlteKategorie && v.wort_deutsch !== richtigesWort.wort_deutsch);
+                restlicheWoerter.sort(() => Math.random() - 0.5);
+                while (falscheOptionen.length < 3 && restlicheWoerter.length > 0) {
+                    falscheOptionen.push(restlicheWoerter.pop());
+                }
+            }
         }
         
+        // Die falschen Optionen mischen
         falscheOptionen.sort(() => Math.random() - 0.5);
 
+        // Die finale Auswahl aus 1 richtigen und 3 falschen Optionen zusammenstellen
         let optionen = [
             richtigesWort.wort_deutsch, 
-            falscheOptionen[0].wort_deutsch, 
-            falscheOptionen[1].wort_deutsch, 
-            falscheOptionen[2].wort_deutsch
+            falscheOptionen[0]?.wort_deutsch || "---", 
+            falscheOptionen[1]?.wort_deutsch || "---", 
+            falscheOptionen[2]?.wort_deutsch || "---"
         ];
         optionen.sort(() => Math.random() - 0.5);
 
@@ -236,7 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.disabled = false;
         });
     }
-
     function antwortPruefen(e) {
         const geklickterButton = e.target;
         const gewaehlteAntwort = geklickterButton.textContent;
