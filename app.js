@@ -124,11 +124,22 @@ async function ladeVokabelnAusDatenbank() {
         });
     }
 
-    if (startBtn) {
-        startBtn.addEventListener('click', () => {
-            spielInitialisieren();
-        });
-    }
+   if (startBtn) {
+    // Das 'async' sorgt dafür, dass wir innerhalb der Funktion 'await' nutzen können
+    startBtn.addEventListener('click', async () => {
+        // 1. Text kurz ändern, damit der Nutzer merkt, dass etwas passiert
+        const buttonText = startBtn.querySelector('span');
+        if (buttonText) {
+            buttonText.textContent = "Lädt Vokabeln...";
+        }
+        
+        // 2. Daten live aus Supabase abholen
+        await ladeVokabelnAusDatenbank();
+        
+        // 3. Erst wenn die Daten da sind, das Spiel initialisieren
+        spielInitialisieren();
+    });
+}
 
     // --- SPIEL-LOGIK ---
     function spielInitialisieren() {
