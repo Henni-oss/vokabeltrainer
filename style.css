@@ -485,17 +485,3 @@ select {
     0% { transform: scale(1); }
     100% { transform: scale(1.04); }
 }
-/* Passt den Motivationsspruch an die normale Fließtextgröße der Sprechblase an */
-.speech-bubble .final-motivation-line {
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    margin-top: 12px !important;
-    margin-bottom: 0 !important; /* Entfernt den überschüssigen Abstand nach unten */
-}
-
-/* Reduziert den äußeren Abstand über dem Button für einen kompakteren Look */
-#restart-btn.orange-start-btn {
-    margin-top: 8px !important; 
-    background-color: #B55219 !important;
-    box-shadow: 0 4px 12px rgba(181, 82, 25, 0.35) !important;
-}
