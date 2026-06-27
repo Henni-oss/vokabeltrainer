@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (tfRichtung) {
                 // Wahre Aussage generieren
-                wortAnzeige.innerHTML = `Bedeutet <strong>"${richtigesWort.wort_tagalog}"</strong> auf Deutsch <strong>"${richtigesWort.wort_deutsch}"</strong>?`;
+                wortAnzeige.innerHTML = `<strong>"${richtigesWort.wort_tagalog}"</strong> bedeutet <strong>"${richtigesWort.wort_deutsch}"</strong>`;
             } else {
                 // Falsche Aussage generieren (Ablenkung aus gleicher Kategorie oder Restpool ziehen)
                 const gewaehlteKategorie = kategorieSelect.value;
