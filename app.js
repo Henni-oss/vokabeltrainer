@@ -41,6 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let streakZaehler = 0; 
     let besterStreak = 0;  
 
+    let aktuellerFrageTyp = "MC"; // "MC" für Multiple Choice, "TF" für True/False (Wahr/Falsch)
+    let tfRichtung = true;        // Bestimmt bei True/False, ob die gezeigte Aussage wahr oder falsch ist
+
     // DOM-Elemente
     const container = document.querySelector('.trainer-container');
     const startScreen = document.getElementById('start-screen');
@@ -61,6 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectWrapper = document.getElementById('select-wrapper');
     const streakContainer = document.getElementById('streak-container');
     const streakText = document.getElementById('streak-text');
+
+    // Antwort-Boxen für die Fragetypen
+    const mcBox = document.getElementById('mc-box');
+    const tfBox = document.getElementById('tf-box');
 
     // Navigation & Dropdown im Menü
     const menuToggle = document.getElementById('menu-toggle');
@@ -166,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (resultScreen) resultScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
 
-        // Fehler behoben: Greift jetzt auf "vokabeln" statt "alleVokabeln" zu
         if (gewaehlteKategorie === "alle") {
             aktuelleRunde = [...vokabeln];
         } else {
@@ -192,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         frageLaden();
     }
 
-  function frageLaden() {
+    function frageLaden() {
         if (index >= aktuelleRunde.length) {
             zeigeTestergebnis();
             return;
@@ -209,58 +215,148 @@ document.addEventListener("DOMContentLoaded", () => {
         progressBar.style.width = `${prozent}%`;
 
         richtigesWort = aktuelleRunde[index];
-        wortAnzeige.textContent = richtigesWort.wort_tagalog;
 
-        // --- HIER IST DIE NEUE KATEGORIE-STRIKTE LOGIK ---
-        const gewaehlteKategorie = kategorieSelect.value;
-        let falscheOptionen = [];
-
-        if (gewaehlteKategorie === "alle") {
-            // Bei "Alle Wörter" filtern wir einfach wie gewohnt aus der gesamten Datenbank
-            falscheOptionen = vokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
-        } else {
-            // NUR Wörter aus derselben Kategorie vorschlagen!
-            falscheOptionen = vokabeln.filter(v => v.kategorie === gewaehlteKategorie && v.wort_deutsch !== richtigesWort.wort_deutsch);
-            
-            // Sicherheits-Fallback: Falls eine Kategorie weniger als 3 andere Wörter hat, 
-            // füllen wir den Rest mit Wörtern aus anderen Kategorien auf, damit die Buttons nicht leer bleiben.
-            if (falscheOptionen.length < 3) {
-                let restlicheWoerter = vokabeln.filter(v => v.kategorie !== gewaehlteKategorie && v.wort_deutsch !== richtigesWort.wort_deutsch);
-                restlicheWoerter.sort(() => Math.random() - 0.5);
-                while (falscheOptionen.length < 3 && restlicheWoerter.length > 0) {
-                    falscheOptionen.push(restlicheWoerter.pop());
-                }
-            }
-        }
-        
-        // Die falschen Optionen mischen
-        falscheOptionen.sort(() => Math.random() - 0.5);
-
-        // Die finale Auswahl aus 1 richtigen und 3 falschen Optionen zusammenstellen
-        let optionen = [
-            richtigesWort.wort_deutsch, 
-            falscheOptionen[0]?.wort_deutsch || "---", 
-            falscheOptionen[1]?.wort_deutsch || "---", 
-            falscheOptionen[2]?.wort_deutsch || "---"
-        ];
-        optionen.sort(() => Math.random() - 0.5);
-
-        antwortButtons.forEach((btn, i) => {
-            btn.style.display = 'block';
-            btn.textContent = optionen[i];
+        // Alle Antwortbuttons für die neue Runde visuell zurücksetzen und aktivieren
+        antwortButtons.forEach(btn => {
             btn.className = "antwort-btn"; 
+            if (btn.classList.contains('tf-btn')) {
+                btn.className = "antwort-btn tf-btn"; // Behalte die Identifikationsklasse für TF-Buttons
+            }
             btn.disabled = false;
         });
+
+        // Zufällige Auswahl des Fragetyps (50% Multiple Choice, 50% Wahr / Falsch)
+        aktuellerFrageTyp = Math.random() < 0.5 ? "MC" : "TF";
+
+        const bubbleCaption = document.querySelector('.bubble-caption');
+
+        if (aktuellerFrageTyp === "MC") {
+            // Layout umschalten
+            if (mcBox) mcBox.classList.remove('hidden');
+            if (tfBox) tfBox.classList.add('hidden');
+
+            if (bubbleCaption) bubbleCaption.textContent = "WAS BEDEUTET DAS WORT?";
+            wortAnzeige.textContent = richtigesWort.wort_tagalog;
+
+            const gewaehlteKategorie = kategorieSelect.value;
+            let falscheOptionen = [];
+
+            if (gewaehlteKategorie === "alle") {
+                falscheOptionen = vokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
+            } else {
+                falscheOptionen = vokabeln.filter(v => v.kategorie === gewaehlteKategorie && v.wort_deutsch !== richtigesWort.wort_deutsch);
+                
+                if (falscheOptionen.length < 3) {
+                    let restlicheWoerter = vokabeln.filter(v => v.kategorie !== gewaehlteKategorie && v.wort_deutsch !== richtigesWort.wort_deutsch);
+                    restlicheWoerter.sort(() => Math.random() - 0.5);
+                    while (falscheOptionen.length < 3 && restlicheWoerter.length > 0) {
+                        falscheOptionen.push(restlicheWoerter.pop());
+                    }
+                }
+            }
+            
+            falscheOptionen.sort(() => Math.random() - 0.5);
+
+            let optionen = [
+                richtigesWort.wort_deutsch, 
+                falscheOptionen[0]?.wort_deutsch || "---", 
+                falscheOptionen[1]?.wort_deutsch || "---", 
+                falscheOptionen[2]?.wort_deutsch || "---"
+            ];
+            optionen.sort(() => Math.random() - 0.5);
+
+            // Nur die Buttons innerhalb der Multiple-Choice Box befüllen
+            if (mcBox) {
+                const mcButtons = mcBox.querySelectorAll('.antwort-btn');
+                mcButtons.forEach((btn, i) => {
+                    btn.style.display = 'block';
+                    btn.textContent = optionen[i];
+                });
+            }
+
+        } else {
+            // Layout umschalten
+            if (mcBox) mcBox.classList.add('hidden');
+            if (tfBox) tfBox.classList.remove('hidden');
+
+            if (bubbleCaption) bubbleCaption.textContent = "STIMMT DIESE AUSSAGE?";
+
+            // 50% Chance ob die Behauptung WAHR oder FALSCH sein soll
+            tfRichtung = Math.random() < 0.5;
+
+            if (tfRichtung) {
+                // Wahre Aussage generieren
+                wortAnzeige.innerHTML = `Bedeutet <strong>"${richtigesWort.wort_tagalog}"</strong> auf Deutsch <strong>"${richtigesWort.wort_deutsch}"</strong>?`;
+            } else {
+                // Falsche Aussage generieren (Ablenkung aus gleicher Kategorie oder Restpool ziehen)
+                const gewaehlteKategorie = kategorieSelect.value;
+                let poolFuerFalscheAussage = [];
+
+                if (gewaehlteKategorie === "alle") {
+                    poolFuerFalscheAussage = vokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
+                } else {
+                    poolFuerFalscheAussage = vokabeln.filter(v => v.kategorie === gewaehlteKategorie && v.wort_deutsch !== richtigesWort.wort_deutsch);
+                    if (poolFuerFalscheAussage.length === 0) {
+                        poolFuerFalscheAussage = vokabeln.filter(v => v.wort_deutsch !== richtigesWort.wort_deutsch);
+                    }
+                }
+
+                poolFuerFalscheAussage.sort(() => Math.random() - 0.5);
+                const zufaelligesFalschesWort = poolFuerFalscheAussage[0]?.wort_deutsch || "etwas anderes";
+
+                wortAnzeige.innerHTML = `Bedeutet <strong>"${richtigesWort.wort_tagalog}"</strong> auf Deutsch <strong>"${zufaelligesFalschesWort}"</strong>?`;
+            }
+        }
     }
+
     function antwortPruefen(e) {
         const geklickterButton = e.target;
-        const gewaehlteAntwort = geklickterButton.textContent;
         
+        // Alle Antwortbuttons sofort sperren
         antwortButtons.forEach(btn => btn.disabled = true);
 
-        if (gewaehlteAntwort === richtigesWort.wort_deutsch) {
-            geklickterButton.classList.add('richtig-vollflaechig');
+        let istRichtig = false;
+
+        if (aktuellerFrageTyp === "MC") {
+            const gewaehlteAntwort = geklickterButton.textContent;
+            istRichtig = (gewaehlteAntwort === richtigesWort.wort_deutsch);
+
+            if (istRichtig) {
+                geklickterButton.classList.add('richtig-vollflaechig');
+            } else {
+                geklickterButton.classList.add('falsch-vollflaechig');
+                // Richtige MC-Option grün hervorheben
+                const mcButtons = mcBox.querySelectorAll('.antwort-btn');
+                mcButtons.forEach(btn => {
+                    if (btn.textContent === richtigesWort.wort_deutsch) {
+                        btn.classList.add('richtig-vollflaechig');
+                    }
+                });
+            }
+        } else {
+            // Wahr / Falsch Modus auswerten
+            const gewaehlteAntwort = geklickterButton.getAttribute('data-value'); // "Wahr" oder "Falsch"
             
+            if ((tfRichtung && gewaehlteAntwort === "Wahr") || (!tfRichtung && gewaehlteAntwort === "Falsch")) {
+                istRichtig = true;
+            }
+
+            if (istRichtig) {
+                geklickterButton.classList.add('richtig-vollflaechig');
+            } else {
+                geklickterButton.classList.add('falsch-vollflaechig');
+                // Den anderen TF-Button grün hervorheben
+                const tfButtons = tfBox.querySelectorAll('.antwort-btn');
+                tfButtons.forEach(btn => {
+                    if (btn !== geklickterButton) {
+                        btn.classList.add('richtig-vollflaechig');
+                    }
+                });
+            }
+        }
+
+        // Streak- & Statistik-Berechnung
+        if (istRichtig) {
             richtigZaehler++;
             streakZaehler++;
             
@@ -271,23 +367,19 @@ document.addEventListener("DOMContentLoaded", () => {
             streakText.textContent = `${streakZaehler}x Streak 🔥`;
             streakContainer.style.display = 'flex'; 
 
-            feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast das Wort perfekt übersetzt.</span>`;
+            feedbackAnzeige.innerHTML = `<span>✅ <strong>Das ist absolut richtig!</strong> Du hast die Frage perfekt beantwortet.</span>`;
             feedbackAnzeige.className = "feedback-box richtig-text";
         } else {
-            geklickterButton.classList.add('falsch-vollflaechig');
-            
             falschZaehler++;
             streakZaehler = 0;
             streakContainer.style.display = 'none'; 
 
-            feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
+            if (aktuellerFrageTyp === "MC") {
+                feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider nicht ganz richtig.</strong> Die richtige Antwort wäre <strong>${richtigesWort.wort_deutsch}</strong> gewesen.</span>`;
+            } else {
+                feedbackAnzeige.innerHTML = `<span>❌ <strong>Leider falsch!</strong> In Wirklichkeit bedeutet <strong>"${richtigesWort.wort_tagalog}"</strong> nämlich <strong>"${richtigesWort.wort_deutsch}"</strong>.</span>`;
+            }
             feedbackAnzeige.className = "feedback-box falsch-text";
-            
-            antwortButtons.forEach(btn => {
-                if (btn.textContent === richtigesWort.wort_deutsch) {
-                    btn.classList.add('richtig-vollflaechig');
-                }
-            });
         }
 
         if (index === aktuelleRunde.length - 1) {
