@@ -108,11 +108,18 @@
                 </div>
             </div>
 
-            <div class="antwort-box">
+           <!-- BESTEHENDE MULTIPLE-CHOICE BOX -->
+            <div id="mc-box" class="antwort-box">
                 <button class="antwort-btn">---</button>
                 <button class="antwort-btn">---</button>
                 <button class="antwort-btn">---</button>
                 <button class="antwort-btn">---</button>
+            </div>
+
+            <!-- NEUE WAHR / FALSCH BOX -->
+            <div id="tf-box" class="antwort-box hidden" style="grid-template-columns: repeat(2, 1fr);">
+                <button class="antwort-btn tf-btn" data-value="Wahr">Wahr</button>
+                <button class="antwort-btn tf-btn" data-value="Falsch">Falsch</button>
             </div>
 
             <div id="feedback" class="feedback-box"></div>
