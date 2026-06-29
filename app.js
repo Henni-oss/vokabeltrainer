@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         antwortButtons.forEach(btn => {
             btn.className = "antwort-btn"; 
             if (btn.classList.contains('tf-btn')) {
-                btn.className = "antwort-btn tf-btn"; // Behalte die Identifikationsklasse für TF-Buttons
+                btn.className = "antwort-btn tf-btn"; 
             }
             btn.disabled = false;
         });
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (tfBox) tfBox.classList.add('hidden');
 
             if (bubbleCaption) bubbleCaption.textContent = "WAS BEDEUTET DAS WORT?";
-            wortAnzeige.textContent = richtigesWort.wort_tagalog;
+            wortAnzeige.innerHTML = `<strong>"${richtigesWort.wort_tagalog}"</strong>`;
 
             const gewaehlteKategorie = kategorieSelect.value;
             let falscheOptionen = [];
@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tfRichtung = Math.random() < 0.5;
 
             if (tfRichtung) {
-                // Wahre Aussage generieren
+                // Wahre Aussage generieren: XY bedeutet XY
                 wortAnzeige.innerHTML = `<strong>"${richtigesWort.wort_tagalog}"</strong> bedeutet <strong>"${richtigesWort.wort_deutsch}"</strong>`;
             } else {
                 // Falsche Aussage generieren (Ablenkung aus gleicher Kategorie oder Restpool ziehen)
@@ -304,7 +304,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 poolFuerFalscheAussage.sort(() => Math.random() - 0.5);
                 const zufaelligesFalschesWort = poolFuerFalscheAussage[0]?.wort_deutsch || "etwas anderes";
 
-                wortAnzeige.innerHTML = `Bedeutet <strong>"${richtigesWort.wort_tagalog}"</strong> auf Deutsch <strong>"${zufaelligesFalschesWort}"</strong>?`;
+                // Falsche Aussage generieren: XY bedeutet XY
+                wortAnzeige.innerHTML = `<strong>"${richtigesWort.wort_tagalog}"</strong> bedeutet <strong>"${zufaelligesFalschesWort}"</strong>`;
             }
         }
     }
